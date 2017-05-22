@@ -7,36 +7,45 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-# TAGS = [1er, 2eme, 3eme, 4eme, 5eme, 6eme, 7eme, 8eme, 9eme, 10eme, 11eme, 12eme, 13eme, 14eme, 15eme, 16eme, 17eme, 18eme, 19eme, 20eme]
-
-# TAGS = ["1er"]
-
-# store = {}
-
-# TAGS.each do |tag|
-#   html_doc = Nokogiri::HTML(open("http://ecolesprimaires.fr/75/paris/#{tag}"))
-#   # number_school = html_doc.search('.section .itemlist .address').length
-#   # number_school.each do |school|
-#   store[:name] = html_doc.search('.section .itemlist .title a').text
-
-# end
+TAGS = ["1er", "2eme", "3eme", "4eme", "5eme", "6eme", "7eme", "8eme", "9eme", "10eme", "11eme", "12eme", "13eme", "14eme", "15eme", "16eme", "17eme", "18eme", "19eme", "20eme"]
 
 puts 'Cleaning database...'
 School.destroy_all
 
-puts 'New Schools'
-title = ["École élémentaire publique Arbre Sec", "École élémentaire publique Argenteuil", "École maternelle publique Saint-Germain l'Auxerrois", "École maternelle publique Sourdière"]
-address = ["15 Rue de l'Arbre Sec", "11 Rue d'Argenteuil", "6 Rue Saint-Germain l'Auxerrois", "27 Rue de la Sourdière"]
 
-title.each_index do |index, t|
-  School.create({
-    name: title[index],
-    address: address[index],
-    zipcode: 75001,
-    city: "Paris",
-    country: "France"})
+TAGS.each do |tag|
+  store = []
+  html_doc = Nokogiri::HTML(open("http://ecolesprimaires.fr/75/paris/#{tag}"))
+  # number_school = html_doc.search('.section .itemlist .address').length
+  # number_school.each do |school|
+  # p html_doc.search('.section .itemlist .title a').text
+  html_doc.search('.section .itemlist .address').each do |info|
+    school = {}
+    school[:name] = info.search('span')[1].text
+    school[:address] = info.search('span[itemprop="streetAddress"]').text
+    school[:zipcode] = info.search('span[itemprop="postalCode"]').text
+    school[:city] = info.search('span[itemprop="addressLocality"]').text
+    school[:country] = "France"
+    store << school
+  end
+  store.each do |school|
+    School.create(school)
+    puts "#{store.length} schools imported"
+  end
+  # next_page = html_doc.search('.pagination a[rel="next"]')
+  # if next_page.empty?
+  #   store.each do |school|
+  #     School.create(school)
+  #     puts "#{store.length} schools created"
+  #   end
+  # else
+  #   p next_page.attribute('href')
+  #   p link = open("http://ecolesprimaires.fr#{next_page.attribute('href')}")
+  # end
 end
 
-puts '4 schools inserted!'
-
+5.times do
+  User.create (
+    first_name: Faker::Name.first_name)
+end
 
