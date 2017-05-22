@@ -3,6 +3,8 @@ class ToysController < ApplicationController
   end
 
   def show
+    set_toy
+    @transaction = Transaction.new()
   end
 
   def new
@@ -19,4 +21,15 @@ class ToysController < ApplicationController
 
   def destroy
   end
+
+  private
+
+  def set_toy
+    @toy = Toy.find(params[:id])
+  end
+
+  def toy_params
+    params.require(:toy).permit(:name, :price, :category, :user_id)
+  end
+
 end
