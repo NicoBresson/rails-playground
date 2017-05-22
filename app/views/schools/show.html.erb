@@ -1,0 +1,9 @@
+<h1>Toys available in my school</h1>
+
+<% @toys.each do |toy| %>
+<ul>
+  <li><%= toy.name %> | <%= link_to "See toy details", toy_path(toy.id) %></li>
+</ul>
+<% end %>
+
+
