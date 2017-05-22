@@ -49,12 +49,15 @@ puts "#{store.length} schools imported"
 puts 'Import 5 beautiful kids'
 
 5.times do
-  User.create ({
+  user = User.new ({
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
     email: Faker::Internet.email,
-    school_id: (1..200).to_a.sample,
+    password: "123456",
+    password_confirmation: "123456"
     })
+  user.school = School.all.sample
+  user.save
 end
 
 puts 'They are all yours'
