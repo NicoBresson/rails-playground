@@ -46,9 +46,9 @@ store.each do |school|
 end
 puts "#{store.length} schools imported"
 
-puts 'Import 5 beautiful kids'
+puts 'Import 200 beautiful kids'
 
-5.times do
+200.times do
   user = User.new ({
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
@@ -59,5 +59,19 @@ puts 'Import 5 beautiful kids'
   user.school = School.all.sample
   user.save
 end
+
+puts 'Invoke pokemons'
+
+200.times do
+  toy = Toy.new ({
+    name: Faker::Pokemon.name,
+    price: (1..100).to_a.sample,
+    category: "cards",
+    description: Faker::Pokemon.location
+    })
+  toy.user = User.all.sample
+  toy.save
+end
+
 
 puts 'They are all yours'
