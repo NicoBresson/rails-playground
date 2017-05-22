@@ -12,9 +12,10 @@ TAGS = ["1er", "2eme", "3eme", "4eme", "5eme", "6eme", "7eme", "8eme", "9eme", "
 puts 'Cleaning database...'
 School.destroy_all
 
+puts 'Scrapping schools hahaha (evil laugh)'
 
+store = []
 TAGS.each do |tag|
-  store = []
   html_doc = Nokogiri::HTML(open("http://ecolesprimaires.fr/75/paris/#{tag}"))
   # number_school = html_doc.search('.section .itemlist .address').length
   # number_school.each do |school|
@@ -28,10 +29,6 @@ TAGS.each do |tag|
     school[:country] = "France"
     store << school
   end
-  store.each do |school|
-    School.create(school)
-    puts "#{store.length} schools imported"
-  end
   # next_page = html_doc.search('.pagination a[rel="next"]')
   # if next_page.empty?
   #   store.each do |school|
@@ -44,8 +41,20 @@ TAGS.each do |tag|
   # end
 end
 
+store.each do |school|
+  School.create(school)
+end
+puts "#{store.length} schools imported"
+
+puts 'Import 5 beautiful kids'
+
 5.times do
-  User.create (
-    first_name: Faker::Name.first_name)
+  User.create ({
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
+    email: Faker::Internet.email,
+    school_id: (1..200).to_a.sample,
+    })
 end
 
+puts 'They are all yours'
