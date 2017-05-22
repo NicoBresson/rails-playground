@@ -1,2 +1,14 @@
-<h1>Toys#show</h1>
-<p>Find me in app/views/toys/show.html.erb</p>
+<h1><%= @toy.name %></h1>
+<p>Price: @toy.price</p>
+<p>Owner: <%= @toy.user.first_name %></p>
+<p>Description: <%= @toy.description %></p>
+
+
+<div>
+  <h3>Book this toy!</h3>
+  <%= simple_form_for([@toy,@transaction]) do |form| %>
+  <%= form.input :start_time %>
+  <%= form.input :end_time %>
+  <%= form.button :submit, 'Book!'%>
+  <% end %>
+</div>
