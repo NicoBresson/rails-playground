@@ -1,2 +1,8 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<h1>Playground</h1>
+<p>Echange toys and become the king of the school</p>
+
+<% @schools.each do |school|  %>
+  <ul>
+    <li><%= school.name %> | <%= link_to "Explore" , school_path(school.id) %></li>
+  </ul>
+<% end %>
