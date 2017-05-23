@@ -6,6 +6,7 @@
   <%= form.input :name %>
   <%= form.select :category, ["card", "pog", "marble", "other"] %>
   <%= form.input :price %>
+  <%= form.input :description, as: :text %>
   <%= form.input :photos, as: :attachinary %>
   <%= form.button :submit, 'Add!'%>
   <% end %>
