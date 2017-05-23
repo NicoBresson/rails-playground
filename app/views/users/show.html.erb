@@ -1,4 +1,3 @@
-
 <div class="profile-wrapper">
   <h1 class="text-center">Welcome to your secret lair <%= @user.first_name %></h1>
 
@@ -10,7 +9,7 @@
         <li><%= @user.last_name %></li>
         <li>
           <% if @user.school_id == nil%>
-            <%= "School to be added" %>
+            <%= link_to "join a school!", edit_user_path(current_user) %>
           <% else %>
             <% school= School.find(@user.school_id) %>
             <%= link_to school.name, school_path(school) %>
