@@ -1,1 +1,12 @@
 // Your footer style
+.footer{
+    background-color: $gray;
+    height: 50px;
+    text-align: center;
+}
+
+.footer p {
+  padding: 10px;
+  margin: 10px;
+  vertical-align: middle;
+}

@@ -67,7 +67,7 @@ puts 'They are all yours'
 
 puts 'Invoke pokemons'
 
-400.times do
+1000.times do
   toy = Toy.new ({
     name: Faker::Pokemon.name,
     price: (1..100).to_a.sample,
