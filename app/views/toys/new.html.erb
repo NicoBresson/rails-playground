@@ -1,5 +1,8 @@
 <div class="container">
   <div class="col-md-6 col-md-offset-3">
+    <% if !current_user.school_id %>
+    <%= link_to "Join a school before adding a toy!", edit_user_path(current_user) %>
+    <% else %>
     <div>
       <h3>Add your toy!</h3>
       <%= simple_form_for @toy do |form| %>
@@ -11,5 +14,6 @@
       <%= form.button :submit, 'Add!', class:"btn btn-info"%>
       <% end %>
     </div>
+    <% end %>
   </div>
 </div>
