@@ -11,8 +11,8 @@ TAGS = ["1er", "2eme", "3eme", "4eme", "5eme", "6eme", "7eme", "8eme", "9eme", "
 
 puts 'Cleaning databasessss...'
 School.destroy_all
-User.destroy_all
 Toy.destroy_all
+User.destroy_all
 
 
 puts 'Scrapping schools hahaha (evil laugh)'
