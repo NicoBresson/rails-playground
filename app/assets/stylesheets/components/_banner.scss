@@ -9,13 +9,15 @@
   justify-content: center;
 }
 .banner h1 {
-  font-size: 50px;
+  font-size: 65px;
+  letter-spacing: 2px;
   font-weight: bold;
   text-shadow: 0px 1px rgba(0, 0, 0, 0.2);
+  font-family: 'Chewy', cursive;
 }
 .banner p {
-  font-size: 20px;
-  font-weight: lighter;
-  color: rgba(255, 255, 255, 0.7);
+  font-size: 30px;
+  color: rgba(255, 255, 255, 0.9);
   margin-bottom: 20px;
+  font-family: 'Dosis', sans-serif;
 }
