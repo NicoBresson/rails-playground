@@ -1,43 +1,58 @@
-<h1>Welcome to your secret lair <%= @user.first_name %></h1>
 
-<h2>Your profile</h2>
-<ul>
-  <li><%= @user.first_name %></li>
-  <li><%= @user.last_name %></li>
-  <li>
-    <% if @user.school_id == nil%>
-      <%= "School to be added" %>
-    <% else %>
-      <%= School.find(@user.school_id).name %>
-    <% end %>
-  </li>
-</ul>
-<%= link_to "Edit", edit_user_path(@user) %>
+<div class="profile-wrapper">
+  <h1 class="text-center">Welcome to your secret lair <%= @user.first_name %></h1>
 
-
-<h2>Your Toys</h2>
-<% @user.toys.each do |toy| %>
-  <ul>
-    <li>Toy name: <%= toy.name %> |
-      <%= link_to "Edit", edit_toy_path(toy) %> |
-      <%= link_to "Delete", toy_path(toy), method: 'delete', data:{confirm:'Are you sure?'} %>
-    </li>
-  </ul>
-<% end %>
-<%= link_to "Add a toy", new_toy_path %>
+  <div class="profile-information">
+    <div class="profile-left">
+      <h2>Your profile</h2>
+      <ul>
+        <li><%= @user.first_name %></li>
+        <li><%= @user.last_name %></li>
+        <li>
+          <% if @user.school_id == nil%>
+            <%= "School to be added" %>
+          <% else %>
+            <%= School.find(@user.school_id).name %>
+          <% end %>
+        </li>
+      </ul>
+      <%= link_to "Edit", edit_user_path(@user) %>
+    </div>
 
 
+    <div class="profile-right">
+      <% avatar_url = current_user.facebook_picture_url || "default_avatar.jpeg" %>
+      <%= image_tag avatar_url, class: "avatar-picture picture-right" %>
+    </div>
+    </div>
+  </div>
 
-<h2>Toys you borrowed</h2>
-<% @user.transactions.each do |transaction| %>
-  <ul>
-    <li>Toy name: <%= Toy.find(transaction.toy_id).name %>
-    | Status:
-    <% if transaction.validated == nil  %>
-        <%= "pending" %>
-    <% else %>
-        <%= "validated" %>
-    <% end %>
-    </li>
-  </ul>
-<% end %>
+
+<div class="user-dashboard">
+  <h2>Your Toys</h2>
+  <% @user.toys.each do |toy| %>
+    <ul>
+      <li>Toy name: <%= toy.name %> |
+        <%= link_to "Edit", edit_toy_path(toy) %> |
+        <%= link_to "Delete", toy_path(toy), method: 'delete', data:{confirm:'Are you sure?'} %>
+      </li>
+    </ul>
+  <% end %>
+  <%= link_to "Add a toy", new_toy_path %>
+
+
+
+  <h2>Toys you borrowed</h2>
+  <% @user.transactions.each do |transaction| %>
+    <ul>
+      <li>Toy name: <%= Toy.find(transaction.toy_id).name %>
+      | Status:
+      <% if transaction.validated == nil  %>
+          <%= "pending" %>
+      <% else %>
+          <%= "validated" %>
+      <% end %>
+      </li>
+    </ul>
+  <% end %>
+</div>
