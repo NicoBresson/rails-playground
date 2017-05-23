@@ -1,4 +1,12 @@
 <h1><%= @toy.name %></h1>
+<p>Photo of the <% unless @toy.category == "other" %>
+  <%= @toy.category %>
+  <% else %>
+  product
+  <% end %>
+</p>
+<%= cl_image_tag("qgfddkwiddi3qgcf3dev",
+      width: 300, height: 300, crop: :fill) %>
 <p>Price: @toy.price</p>
 <p>Owner: <%= @toy.user.first_name %></p>
 <p>Description: <%= @toy.description %></p>
