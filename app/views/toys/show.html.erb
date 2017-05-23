@@ -28,8 +28,14 @@
 <div>
   <h3>Book this toy!</h3>
   <%= simple_form_for([@toy,@transaction]) do |form| %>
-  <%= form.input :start_time %>
-  <%= form.input :end_time %>
-  <%= form.button :submit, 'Book!'%>
+    <%= form.input :start_time %>
+    <%= form.input :end_time %>
+    <% if !user_signed_in? %>
+      <%= link_to "Sign-up to book!", new_user_session_path, class: "btn btn-primary" %>
+    <% elsif current_user.school_id %>
+      <%= link_to "join the school!", edit_user_path(current_user), class: "btn btn-primay" %>
+    <% else %>
+      <%= form.button :submit, 'Book!' %>
+    <% end %>
   <% end %>
 </div>
