@@ -1,8 +1,17 @@
 <div class="navbar-wagon">
   <!-- Logo -->
-  <%= link_to root_path, class: "navbar-wagon-brand" do %>
-    <%= image_tag "logo.png" %>
-  <% end %>
+  <div class="logo-content">
+    <ul class="list-inline">
+      <li>
+        <%= link_to root_path, class: "navbar-wagon-brand" do %>
+          <%= image_tag "logo_playground.png" %>
+        <% end %>
+      </li>
+      <li>
+        <p>Playground</p>
+      </li>
+    </ul>
+  </div>
 
   <!-- Right Navigation -->
   <div class="navbar-wagon-right hidden-xs hidden-sm">
