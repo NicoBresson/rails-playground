@@ -16,19 +16,24 @@ class ToysController < ApplicationController
     @toy = Toy.new(toy_params)
     @toy.user = current_user
     if @toy.save
-      redirect_to toy_path(@toy)
+      redirect_to user_path(current_user)
     else
-      render :new_toy
+      render :new
     end
   end
 
   def edit
+    set_toy
   end
 
   def update
+    set_toy.update(toy_params)
+    redirect_to user_path(current_user)
   end
 
   def destroy
+    set_toy.destroy
+    redirect_to user_path(current_user)
   end
 
   private

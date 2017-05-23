@@ -1,2 +1,13 @@
 <h1>Toys#edit</h1>
-<p>Find me in app/views/toys/edit.html.erb</p>
+
+<div>
+  <h3>Edit <%= @toy.name %></h3>
+  <%= simple_form_for @toy do |form| %>
+  <%= form.input :name %>
+  <%= form.select :category, ["card", "pog", "marble", "other"] %>
+  <%= form.input :price %>
+  <%= form.input :description, as: :text %>
+  <%= form.input :photos, as: :attachinary %>
+  <%= form.button :submit, 'Validate changes!'%>
+  <% end %>
+</div>
