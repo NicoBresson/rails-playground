@@ -1,0 +1,34 @@
+<h1>Welcome to your secret lair <%= @user.first_name %></h1>
+
+<h2>Your profile</h2>
+<ul>
+  <li><%= @user.first_name %></li>
+  <li><%= @user.last_name %></li>
+  <li><%= School.find(@user.school_id).name %></li>
+</ul>
+<%= link_to "Edit", edit_user_path(@user) %>
+
+
+<h2>Your Toys</h2>
+<% @user.toys.each do |toy| %>
+  <ul>
+    <li>Toy name: <%= toy.name %> </li>
+  </ul>
+<% end %>
+<%= link_to "Add a toy", new_toy_path %>
+
+
+
+<h2>Toys you borrowed</h2>
+<% @user.transactions.each do |transaction| %>
+  <ul>
+    <li>Toy name: <%= Toy.find(transaction.toy_id).name %>
+    | Status:
+    <% if transaction.validated == nil  %>
+        <%= "pending" %>
+    <% else %>
+        <%= "validated" %>
+    <% end %>
+    </li>
+  </ul>
+<% end %>
