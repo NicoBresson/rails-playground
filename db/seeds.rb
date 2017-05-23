@@ -70,7 +70,7 @@ puts 'Invoke pokemons'
   toy = Toy.new ({
     name: Faker::Pokemon.name,
     price: (1..100).to_a.sample,
-    category: "cards",
+    category: "card",
     description: Faker::Pokemon.location
     })
   toy.user = User.all.sample

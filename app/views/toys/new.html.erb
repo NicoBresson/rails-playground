@@ -1,3 +1,12 @@
 <h1>Toys#new</h1>
-<p>Find me in app/views/toys/new.html.erb</p>
 
+<div>
+  <h3>Add your toy!</h3>
+  <%= simple_form_for @toy do |form| %>
+  <%= form.input :name %>
+  <%= form.select :category, ["card", "pog", "marble", "other"] %>
+  <%= form.input :price %>
+  <%= form.input :photos, as: :attachinary %>
+  <%= form.button :submit, 'Add!'%>
+  <% end %>
+</div>

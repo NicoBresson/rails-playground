@@ -1,5 +1,5 @@
 class Toy < ApplicationRecord
-  CATEGORY = ["cards", "pogs", "marbles", "other"]
+  CATEGORY = ["card", "pog", "marble", "other"]
   belongs_to :user
   has_many :transactions
   has_attachment :photos, maximum: 2
