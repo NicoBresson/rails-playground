@@ -18,7 +18,10 @@
 <h2>Your Toys</h2>
 <% @user.toys.each do |toy| %>
   <ul>
-    <li>Toy name: <%= toy.name %> </li>
+    <li>Toy name: <%= toy.name %> |
+      <%= link_to "Edit", edit_toy_path(toy) %> |
+      <%= link_to "Delete", toy_path(toy), method: 'delete', data:{confirm:'Are you sure?'} %>
+    </li>
   </ul>
 <% end %>
 <%= link_to "Add a toy", new_toy_path %>
