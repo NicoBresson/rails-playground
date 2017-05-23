@@ -24,11 +24,7 @@
     </li>
   </ul>
 <% end %>
-<% if !current_user.school_id %>
-  <%= link_to "join a school to add a toy", edit_user_path(current_user) %>
-<% else %>
   <%= link_to "Add a toy", new_toy_path %>
-<% end %>
 
 
 
