@@ -1,8 +1,17 @@
-<h1>Playground</h1>
-<p>Exchange toys and become the king of the school</p>
 
-<% @schools.each do |school|  %>
-  <ul>
-    <li><%= school.name %> | <%= link_to "Explore", school_path(school.id)%></li>
-  </ul>
-<% end %>
+<div class="banner" style="background-image: linear-gradient(-225deg, rgba(0,101,168,0.6) 0%, rgba(0,36,61,0.6) 50%), url('<%= cl_image_path("baltlkmfahbfqib1b7un") %>');">
+  <div class="banner-content">
+    <h1>Playground</h1>
+    <p>Exchange toys and become the king of the school</p>
+    <a href="#schools" class="btn btn-primary btn-lg">Find your school</a>
+  </div>
+</div>
+
+
+<div id="schools">
+  <% @schools.each do |school|  %>
+    <ul>
+      <li><%= school.name %> | <%= link_to "Explore", school_path(school.id)%></li>
+    </ul>
+  <% end %>
+</div>
