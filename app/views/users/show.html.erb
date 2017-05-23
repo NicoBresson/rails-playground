@@ -4,7 +4,13 @@
 <ul>
   <li><%= @user.first_name %></li>
   <li><%= @user.last_name %></li>
-  <li><%= School.find(@user.school_id).name %></li>
+  <li>
+    <% if @user.school_id == nil%>
+      <%= "School to be added" %>
+    <% else %>
+      <%= School.find(@user.school_id).name %>
+    <% end %>
+  </li>
 </ul>
 <%= link_to "Edit", edit_user_path(@user) %>
 
