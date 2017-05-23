@@ -10,9 +10,9 @@ class TransactionsController < ApplicationController
     @toy = Toy.find(params[:toy_id])
     @transaction = Transaction.new(transaction_params)
     @transaction.user_id = @user.id
-    @transaction.toy = @toy_id
+    @transaction.toy_id = @toy.id
     if @transaction.save
-      redirect_to schools_path(@user.school.id)
+      redirect_to school_path(@toy.user.school)
     else
       render toy_path(params[:toy_id])
     end

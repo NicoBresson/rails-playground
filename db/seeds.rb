@@ -9,8 +9,12 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 TAGS = ["1er", "2eme", "3eme", "4eme", "5eme", "6eme", "7eme", "8eme", "9eme", "10eme", "11eme", "12eme", "13eme", "14eme", "15eme", "16eme", "17eme", "18eme", "19eme", "20eme"]
 
-puts 'Cleaning database...'
+puts 'Cleaning databasessss...'
 School.destroy_all
+Toy.destroy_all
+User.destroy_all
+Transaction.destroy_all
+
 
 puts 'Scrapping schools hahaha (evil laugh)'
 
@@ -59,19 +63,19 @@ puts 'Import 200 beautiful kids'
   user.school = School.all.sample
   user.save
 end
+puts 'They are all yours'
 
 puts 'Invoke pokemons'
 
-200.times do
+400.times do
   toy = Toy.new ({
     name: Faker::Pokemon.name,
     price: (1..100).to_a.sample,
-    category: "cards",
+    category: "card",
     description: Faker::Pokemon.location
     })
   toy.user = User.all.sample
   toy.save
 end
 
-
-puts 'They are all yours'
+puts 'Catch\'em all'
