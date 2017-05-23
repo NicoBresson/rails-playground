@@ -20,7 +20,10 @@ gem 'devise'
 gem 'open_uri_redirections', '~> 0.2.1'
 gem 'nokogiri'
 gem 'faker'
-gem 'cloudinary'
+gem 'cloudinary', '1.1.7'
+gem 'attachinary', github: 'assembler/attachinary'
+gem 'jquery-fileupload-rails'
+gem 'coffee-rails'
 
 group :development, :test do
   gem 'binding_of_caller'
