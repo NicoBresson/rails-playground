@@ -13,6 +13,7 @@ puts 'Cleaning databasessss...'
 School.destroy_all
 Toy.destroy_all
 User.destroy_all
+Transaction.destroy_all
 
 
 puts 'Scrapping schools hahaha (evil laugh)'
