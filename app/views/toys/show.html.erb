@@ -1,4 +1,6 @@
 <h1><%= @toy.name %></h1>
+<%= cl_image_tag("qgfddkwiddi3qgcf3dev",
+      width: 300, height: 300, crop: :fill) %>
 <p>Price: @toy.price</p>
 <p>Owner: <%= @toy.user.first_name %></p>
 <p>Description: <%= @toy.description %></p>
