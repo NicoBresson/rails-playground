@@ -1,0 +1,6 @@
+<%= simple_form_for@user do |form| %>
+  <%= form.input :first_name %>
+  <%= form.input :last_name %>
+  <%= form.association :school, collection: School.order('name ASC') %>
+  <%= form.button :submit, 'Validate change!'%>
+<% end %>
