@@ -32,7 +32,13 @@
 </div>
 </div>
 
-<div class="container">
+<% if @toy.user == current_user %>
+<% hide_my_toy = "hidden" %>
+<% else %>
+<% hide_my_toy = "" %>
+<% end %>
+
+<div class="container <%= hide_my_toy %>">
   <div class="row">
     <div class="col-md-6 col-md-offset-3">
       <h3>Book this toy!</h3>
