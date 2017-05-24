@@ -1,4 +1,3 @@
-
 <div class="container">
   <div class="row">
     <div class="col-md-6 col-md-offset-3">
@@ -15,33 +14,44 @@
       <%= cl_image_tag photo.path, width: 400, height: 300, crop: :fit %>
       <% end %>
       <% else %>
-      <%= cl_image_tag("e3b8igydl07dylxnuib9", width: 400, height: 300, crop: :fit) %>
+      product
       <% end %>
-      <p>Price: <%= @toy.price %></p>
-      <p>Owner: <%= @toy.user.first_name %></p>
-      <p>Description: <%= @toy.description %></p>
-    </div>
+    </p>
+
+    <% if @toy.photos? %>
+    <% @toy.photos.each do |photo| %>
+    <%= cl_image_tag photo.path, width: 400, height: 300, crop: :fit %>
+    <% end %>
+    <% else %>
+    <%= cl_image_tag("e3b8igydl07dylxnuib9", width: 400, height: 300, crop: :fit) %>
+    <% end %>
+    <p>Price: <%= @toy.price %></p>
+    <p>Owner: <%= @toy.user.first_name %></p>
+    <p>Description: <%= @toy.description %></p>
   </div>
+</div>
 </div>
 
 <div class="container">
   <div class="row">
     <div class="col-md-6 col-md-offset-3">
-    <h3>Book this toy!</h3>
-    <%= simple_form_for([@toy,@transaction]) do |form| %>
-    <div class="span5 col-md-5" id = "date-picker" style="position:static; float: none;"></div>
-    <%= form.input :start_time %>
-    <%= form.input :end_time %>
-    <% if !user_signed_in? %>
-    <%= link_to "Sign-up to book!", new_user_session_path, class: "btn btn-primary" %>
-    <!-- TODO Add a callback to come back to this booking page -->
-    <% elsif !current_user.school_id %>
-    <%= link_to "join the school to book it!", edit_user_path(current_user), class: "btn btn-primay" %>
-    <!-- TODO Pre-fill the form with the right school, and add a callback to come back to this booking page -->
-    <% else %>
-    <%= form.button :submit, 'Book!' %>
-    <% end %>
-    <% end %>
+      <h3>Book this toy!</h3>
+      <%= simple_form_for([@toy,@transaction]) do |form| %>
+      <div class="span5 col-md-5" id = "date-picker" style="position:static; float: none;"></div>
+      <%= form.input :start_time %>
+      <%= form.input :end_time %>
+      <% if !user_signed_in? %>
+
+      <%= link_to "Sign-up to book!", new_user_session_path, class: "btn btn-primary" %>
+      <!-- TODO Add a callback to come back to this booking page -->
+      <% elsif current_user.school_id != @toy.user.school.id %>
+      <%= link_to "join the school to book it!", edit_user_path(current_user), class: "btn btn-primay" %>
+      <!-- TODO Pre-fill the form with the right school, and add a callback to come back to this booking page -->
+
+      <% else %>
+      <%= form.button :submit, 'Book!' %>
+      <% end %>
+      <% end %>
     </div>
   </div>
 </div>

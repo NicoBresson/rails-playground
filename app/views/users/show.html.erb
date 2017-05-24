@@ -20,13 +20,22 @@
     </div>
 
     <div class="profile-right">
-      <% avatar_url = current_user.facebook_picture_url || "default_avatar.jpeg" %>
-      <%= image_tag avatar_url, class: "avatar-picture picture-right" %>
+      <% if current_user.photo.nil? %>
+        <% avatar_pict_path = cl_image_path('mtbg4ch4wojpwppzfhem') %>
+      <% else  %>
+        <% avatar_pict_path = current_user.photo.path %>
+      <% end %>
+      <% avatar_url = current_user.facebook_picture_url || avatar_pict_path %>
+      <% if avatar_url == current_user.facebook_picture_url %>
+        <%= image_tag avatar_url, class: "avatar-picture picture-right" %>
+      <% else %>
+        <%= cl_image_tag avatar_url, class: "avatar-picture picture-right" %>
+      <% end %>
     </div>
   </div>
 
     <div class="tabs">
-      <a class="tab active" data-target="#assets">
+      <a class="tab" data-target="#assets">
         <h3>Assets</h3>
       </a>
       <a class="tab" data-target="#liabilities">
@@ -37,23 +46,42 @@
 
 
 <div class="user-dashboard">
-  <div class="tab-content" id="assets">
-    <h2>Your Toys</h2>
-      <% @user.toys.each do |toy| %>
-        <ul>
-          <li>Toy name: <%= toy.name %> |
-            <%= link_to "Edit", edit_toy_path(toy) %> |
-            <%= link_to "Delete", toy_path(toy), method: 'delete', data:{confirm:'Are you sure?'} %>
-          </li>
-        </ul>
-      <% end %>
-      <%= link_to "Add a toy", new_toy_path %>
+  <div class="tab-content">
+    <div class="text-center">
+      <i class="fa fa-hand-o-up" aria-hidden="true"></i>
+      <h2 id="dashboard">Have a look at your Dashboard!</h2>
+    </div>
   </div>
 
-
+  <div class="tab-content hidden" id="assets">
+    <h2 class= "text-center">Your Toys</h2>
+    <div class="container">
+      <div class="row">
+        <% @user.toys.each do |toy| %>
+        <div class="col-xs-12 col-sm-4">
+          <% if toy.photos.first.nil? %>
+            <% photo_path = ("e3b8igydl07dylxnuib9") %>
+          <% else %>
+            <% photo_path = toy.photos.first.path %>
+          <% end %>
+          <div class="card" style="background-image: linear-gradient(-225deg, rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('<%= cl_image_path photo_path %>');">
+            <div class="card-category"><%= toy.user.first_name %></div>
+            <div class="card-description">
+              <h2><%= toy.name %></h2>
+              <p><%= toy.description unless toy.description.nil? %></p>
+            </div>
+            <% avatar_url = current_user.facebook_picture_url || cl_image_path('mtbg4ch4wojpwppzfhem') %>
+            <%= image_tag avatar_url, class: "card-user avatar" %>
+            <%= link_to "", toy_path(toy.id), class: "card-link" %>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
 
   <div class="tab-content hidden" id="liabilities">
-    <h2>Toys you borrowed</h2>
+    <h2 class="text-center">Toys you borrowed</h2>
       <% @user.transactions.each do |transaction| %>
         <ul>
           <li>Toy name: <%= Toy.find(transaction.toy_id).name %>
@@ -66,5 +94,42 @@
           </li>
         </ul>
       <% end %>
+    <div class="container">
+      <div class="row">
+        <% @user.transactions.each do |transaction| %>
+        <div class="col-xs-12 col-sm-4">
+          <% if transaction.toy.photos.first.nil? %>
+            <% photo_path = ("e3b8igydl07dylxnuib9") %>
+          <% else %>
+            <% photo_path = transaction.toy.photos.first.path %>
+          <% end %>
+          <div class="card" style="background-image: linear-gradient(-225deg, rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('<%= cl_image_path photo_path %>');">
+            <div class="card-category"><%= transaction.user.first_name %></div>
+            <div class="card-description">
+              <h2><%= transaction.toy.name %></h2>
+              <p><%= transaction.toy.description unless transaction.toy.description.nil? %></p>
+            </div>
+            <div class="card-status">
+              <% if transaction.validated == nil %>
+                  <ul class="list-inline">
+                    <li>
+                      <i class="fa fa-question-circle" aria-hidden="true"></i>
+                    </li>
+                    <li>
+                      <p>Pending</p>
+                    </li>
+                  </ul>
+              <% else %>
+
+              <% end %>
+            </div>
+            <% avatar_url = transaction.toy.user.facebook_picture_url || cl_image_path('mtbg4ch4wojpwppzfhem') %>
+            <%= image_tag avatar_url, class: "card-user avatar" %>
+            <%= link_to "", toy_path(transaction.toy.id), class: "card-link" %>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>

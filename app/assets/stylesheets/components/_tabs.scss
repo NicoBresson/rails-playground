@@ -23,16 +23,18 @@
   flex: 1 1 auto;
   text-align: center;
   padding: 20px 0;
+  border: 1px solid rgb(44, 62, 80);
 }
 .tab:first-child {
   border-radius: 10px 0 0 0;
+  border-right: none;
 }
 .tab:last-child {
   border-radius: 0 10px 0 0;
 }
 .tab.active {
   background: white;
-  color: black;
+  color: rgb(44, 62, 80);
 }
 .tab-content {
   padding-top: 50px;
@@ -40,4 +42,13 @@
 .tab-content p {
   font-size: 30px;
   font-weight: bold;
+}
+
+#dashboard {
+  margin: 20px 0px 40px 0px;
+}
+.fa-hand-o-up {
+  padding: 10px;
+  font-size: 45px;
+  color: $yellow;
 }
