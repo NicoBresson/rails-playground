@@ -1,6 +1,6 @@
 <% school = School.find(params[:id]) %>
 
-<div class="banner-thin" style="background-image: linear-gradient(-225deg, rgba(44, 62, 80, 0.6) 10%, rgba(76, 161, 175, 0.6) 50%), url('<%= cl_image_path("baltlkmfahbfqib1b7un") %>');">
+<div class="banner-thin" style="background-image: linear-gradient(-225deg, rgba(44, 62, 80, 0.6) 10%, rgba(76, 161, 175, 0.6) 50%), url('<%= cl_image_path("hrenp7omustctiz43hwb") %>');">
   <div class="banner-content">
     <h1><%= school.name %></h1>
     <p>Find your toys!!</p>
@@ -8,7 +8,7 @@
 </div>
 
 
-<h1><%= school.name %></h1>
+<h1 class= "text-center"><%= school.name %></h1>
 
 
 <% @toys.each do |toy| %>
@@ -18,3 +18,22 @@
 <% end %>
 
 
+<div class="container">
+  <div class="row">
+    <% @toys.each do |toy| %>
+    <div class="col-xs-12 col-sm-4">
+      <div class="card" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('<%= cl_image_path("toy.photos.first.path") %>');">
+        <div class="card-category">Popular</div>
+        <div class="card-description">
+          <h2><%= toy.name %></h2>
+          <p><%= toy.description unless toy.description.nil? %></p>
+        </div>
+        <img class="card-user avatar" src="user.jpg">
+        <% avatar_url = current_user.facebook_picture_url || cl_image_path('b5qwg6ocegmv4kriwhly') %>
+        <%= image_tag avatar_url, class: "card-user avatar" %>
+        <%= link_to '', toy_path(toy.id) %>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>

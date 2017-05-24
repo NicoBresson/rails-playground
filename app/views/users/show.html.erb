@@ -20,7 +20,7 @@
     </div>
 
     <div class="profile-right">
-      <% avatar_url = current_user.facebook_picture_url || "default_avatar.jpeg" %>
+      <% avatar_url = current_user.facebook_picture_url || cl_image_path('b5qwg6ocegmv4kriwhly') %>
       <%= image_tag avatar_url, class: "avatar-picture picture-right" %>
     </div>
   </div>
