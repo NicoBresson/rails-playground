@@ -3,16 +3,39 @@
   <div class="banner-content">
     <h1>Playground</h1>
     <p>Exchange toys and become the king of the school</p>
-    <a href="#schools" class="btn btn-primary btn-lg">Find your school</a>
+    <a href="#map" class="btn btn-primary btn-lg">Find your school</a>
   </div>
 </div>
 
+<div class="container">
+  <div class="row">
+  <div class="col-sm-12 col-md-8 col-md-offset-2">
+      <div id="map" style="width: 100%; height: 600px;"></div>
+      <% content_for(:after_js) do %>
+      <script>
+        $(document).ready(function() {
+          var handler = Gmaps.build('Google');
+          handler.buildMap({ internal: { id: 'map' } }, function() {
+            markers = handler.addMarkers(<%= raw @hash.to_json %>);
+            handler.bounds.extendWith(markers);
+            handler.fitMapToBounds();
+            if (markers.length == 0) {
+              handler.getMap().setZoom(2);
+            } else if (markers.length == 1) {
+              handler.getMap().setZoom(14);
+            }
+          });
+        });
+      </script>
+      <% end %>
 
-<div id="schools">
-  <% @schools.each do |school|  %>
-    <ul>
-      <li><%= school.name %> | <%= link_to "Explore", school_path(school.id)%></li>
-    </ul>
-  <% end %>
+      <div id="schools">
+        <% @schools.each do |school|  %>
+        <ul>
+          <li><%= school.name %> | <%= link_to "Explore", school_path(school.id)%></li>
+        </ul>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
-

@@ -9,9 +9,12 @@ class School < ApplicationRecord
   validates :country, presence: true
 
   geocoded_by :complete_address
-  after_validation :geocode, if: :complete_address_changed?
+  after_validation :geocode, if: :address_changed?
 
   def complete_address
     return "#{self.address}, #{self.zipcode}, #{self.city}, #{self.country}"
   end
 end
+
+
+# a = School.create(name: "test", address: "16 villa gaudelet", zipcode: 75011, city: "paris", country: "france")
