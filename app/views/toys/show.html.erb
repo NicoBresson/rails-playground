@@ -10,26 +10,17 @@
       </p>
 
       <% if @toy.photos? %>
-      <% @toy.photos.each do |photo| %>
-      <%= cl_image_tag photo.path, width: 400, height: 300, crop: :fit %>
-      <% end %>
+        <% @toy.photos.each do |photo| %>
+        <%= cl_image_tag photo.path, width: 400, height: 300, crop: :fit %>
+        <% end %>
       <% else %>
-      product
+        <%= cl_image_tag("e3b8igydl07dylxnuib9", width: 400, height: 300, crop: :fit) %>
       <% end %>
-    </p>
-
-    <% if @toy.photos? %>
-    <% @toy.photos.each do |photo| %>
-    <%= cl_image_tag photo.path, width: 400, height: 300, crop: :fit %>
-    <% end %>
-    <% else %>
-    <%= cl_image_tag("e3b8igydl07dylxnuib9", width: 400, height: 300, crop: :fit) %>
-    <% end %>
-    <p>Price: <%= @toy.price %></p>
-    <p>Owner: <%= @toy.user.first_name %></p>
-    <p>Description: <%= @toy.description %></p>
+      <p>Price: <%= @toy.price %></p>
+      <p>Owner: <%= @toy.user.first_name %></p>
+      <p>Description: <%= @toy.description %></p>
+    </div>
   </div>
-</div>
 </div>
 
 <div class="container">
