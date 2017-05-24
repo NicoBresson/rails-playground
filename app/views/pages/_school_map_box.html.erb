@@ -1,5 +1,10 @@
 <div class="map_box">
   <h3><%= school.name %></h3>
   <p><%= school.complete_address %></p>
-  <%= link_to "Discover the scool!", school_path(school), target: :blank, class: "btn btn-warning" %>
+  <% if school.toys.size == 0 %>
+   <p>This school has no toys yet</p>
+  <% else %>
+    <p>This school has <strong><%= school.toys.size %> toys!</strong></p>
+  <% end %>
+  <%= link_to "Discover the school!", school_path(school), target: :blank, class: "btn btn-warning" %>
 </div>
