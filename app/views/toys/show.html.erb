@@ -33,7 +33,7 @@
     <% if !user_signed_in? %>
       <%= link_to "Sign-up to book!", new_user_session_path, class: "btn btn-primary" %>
       <!-- TODO Add a callback to come back to this booking page -->
-    <% elsif !current_user.school_id %>
+    <% elsif current_user.school_id != @toy.user.school %>
       <%= link_to "join the school to book it!", edit_user_path(current_user), class: "btn btn-primay" %>
       <!-- TODO Pre-fill the form with the right school, and add a callback to come back to this booking page -->
     <% else %>
