@@ -6,6 +6,7 @@ class User < ApplicationRecord
   belongs_to :school, optional: true
   has_many :toys, dependent: :destroy
   has_many :transactions
+  has_attachment :photo
   validates :email, presence: true, uniqueness: true
   validates :first_name, presence: true
   validates :last_name, presence: true
