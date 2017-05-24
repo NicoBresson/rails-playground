@@ -5,6 +5,7 @@
     <%= form.input :first_name %>
     <%= form.input :last_name %>
     <%= form.association :school, collection: School.order('name ASC') %>
+    <%= form.input :photo, as: :attachinary %>
     <%= form.button :submit, 'Validate change!', class:"btn btn-info"%>
     <% end %>
   </div>
