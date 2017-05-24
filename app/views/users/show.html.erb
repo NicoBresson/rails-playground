@@ -20,9 +20,17 @@
     </div>
 
     <div class="profile-right">
-      <% avatar_pict_path = current_user.photo.path || cl_image_path('mtbg4ch4wojpwppzfhem') %>
+      <% if current_user.photo.nil? %>
+        <% avatar_pict_path = cl_image_path('mtbg4ch4wojpwppzfhem') %>
+      <% else  %>
+        <% avatar_pict_path = current_user.photo.path %>
+      <% end %>
       <% avatar_url = current_user.facebook_picture_url || avatar_pict_path %>
-      <%= cl_image_tag avatar_url, class: "avatar-picture picture-right" %>
+      <% if avatar_url == current_user.facebook_picture_url %>
+        <%= image_tag avatar_url, class: "avatar-picture picture-right" %>
+      <% else %>
+        <%= cl_image_tag avatar_url, class: "avatar-picture picture-right" %>
+      <% end %>
     </div>
   </div>
 
@@ -115,7 +123,7 @@
 
               <% end %>
             </div>
-            <% avatar_url = current_user.facebook_picture_url || cl_image_path('mtbg4ch4wojpwppzfhem') %>
+            <% avatar_url = transaction.toy.user.facebook_picture_url || cl_image_path('mtbg4ch4wojpwppzfhem') %>
             <%= image_tag avatar_url, class: "card-user avatar" %>
             <%= link_to "", toy_path(transaction.toy.id), class: "card-link" %>
           </div>
