@@ -9,9 +9,10 @@
 }
 .card-user {
   position: absolute;
-  right: 10px;
-  top: 10px;
+  right: 12px;
+  top: 12px;
 }
+
 .card-category {
   position: absolute;
   top: 10px;
@@ -44,4 +45,5 @@
 }
 .card-link:hover{
   opacity: 0.1;
+  border-radius: 10px;
 }
