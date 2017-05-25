@@ -1,4 +1,4 @@
-<div class="profile-wrapper">
+<div class="profile-wrapper hidden">
   <h1 class="text-center">Welcome to your secret lair <%= @user.first_name %></h1>
 
   <div class="profile-information">
@@ -45,33 +45,6 @@
   </div>
 
 <div class="profile-wrapper">
-  <div class="profile-info">
-    <div class="avatar-picture picture-right">
-      <% if current_user.photo.nil? %>
-        <% avatar_pict_path = cl_image_path('mtbg4ch4wojpwppzfhem') %>
-      <% else  %>
-        <% avatar_pict_path = current_user.photo.path %>
-      <% end %>
-      <% avatar_url = current_user.facebook_picture_url || avatar_pict_path %>
-      <% if avatar_url == current_user.facebook_picture_url %>
-        <%= image_tag avatar_url %>
-      <% else %>
-        <%= cl_image_tag avatar_url %>
-      <% end %>
-    </div>
-    <div class="profile-content">
-      <p><%= @user.first_name %></p>
-      <p>
-        <% if @user.school_id == nil%>
-          <%= link_to "join a school!", edit_user_path(current_user) %>
-        <% else %>
-          <% school= School.find(@user.school_id) %>
-          <%= link_to school.name, school_path(school) %>
-        <% end %>
-      </p>
-      <p><%= link_to "Edit", edit_user_path(@user) %></p>
-    </div>
-  </div>
   <div class="profile-portfolio">
     <div id="slideshow">
        <% @user.toys.each do |toy| %>
@@ -96,9 +69,34 @@
         </div>
     </div>
   </div>
+  <div class="profile-picture">
+    <% if current_user.photo.nil? %>
+      <% avatar_pict_path = cl_image_path('mtbg4ch4wojpwppzfhem') %>
+    <% else  %>
+      <% avatar_pict_path = current_user.photo.path %>
+    <% end %>
+    <% avatar_url = current_user.facebook_picture_url || avatar_pict_path %>
+    <% if avatar_url == current_user.facebook_picture_url %>
+      <%= image_tag avatar_url, class: "avatar-picture" %>
+    <% else %>
+      <%= cl_image_tag avatar_url, class: "avatar-picture" %>
+    <% end %>
+    <div class="profile-content">
+      <h3><%= @user.first_name %></h3>
+      <p>
+        <% if @user.school_id == nil%>
+          <%= link_to "join a school!", edit_user_path(current_user) %>
+        <% else %>
+          <% school= School.find(@user.school_id) %>
+          <%= link_to school.name, school_path(school) %>
+        <% end %>
+      </p>
+      <p><%= link_to "Edit", edit_user_path(@user) %></p>
+    </div>
+  </div>
 </div>
 
-<div class="user-dashboard">
+<div class="user-dashboard hidden">
   <div class="tab-content hidden">
     <div class="text-center">
       <i class="fa fa-hand-o-up" aria-hidden="true"></i>
