@@ -33,7 +33,7 @@
         <!-- slideshow to see toys per category -->
         <div class="col-xs-10 col-md-6">
           <div class="profile-portfolio">
-            <h2><%= link_to 'My Portfolio', toy_path %></h2>
+            <h2><%= link_to 'My Portfolio', user_toys_path(current_user) %></h2>
             <div id="slideshow">
                <% @user.toys.each do |toy| %>
                  <div>

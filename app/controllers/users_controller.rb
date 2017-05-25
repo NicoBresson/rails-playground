@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: [:show, :edit, :toys]
+
   def show
-    set_user
   end
   def edit
-    set_user
   end
 
   def update
@@ -24,6 +24,10 @@ class UsersController < ApplicationController
         redirect_to edit_user_path(current_user)
       end
     end
+  end
+
+  def toys
+    @user_toys = @user.toys
   end
 
   private
