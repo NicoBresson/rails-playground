@@ -28,9 +28,11 @@ class TransactionsController < ApplicationController
   def bagarre
     @user = current_user
     user_transactions = @user.transactions
-    late_transactions = []
+    @late_transactions = []
     user_transactions.each do |transaction|
-      late_transactions << transaction if transaction.end_time < DateTime.now
+      @late_transactions << transaction if transaction.end_time < Date.new(2017,05,28)
+    end
+    return @late_transactions
   end
 
   private

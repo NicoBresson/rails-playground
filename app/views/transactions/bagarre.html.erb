@@ -1,0 +1,42 @@
+<h1>All my late transactions</h1>
+
+<p><%= Transaction.all.first.user.first_name %> has not given you back <%= Transaction.all.first.toy.name %></p>
+
+<div class="holder">
+  <div id="bin">
+    <%= cl_image_tag('j0a73d2zxk8qeztunxvk', height: 500, width: 326, crop: :fit)%>
+
+    <button type="button" id="fight" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+      Fight!
+    </button>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Fight!</h4>
+          </div>
+          <div class="modal-body">
+            <p><img src="https://media.giphy.com/media/AY1sl1gzyIy2s/giphy.gif" alt=""></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- find other school students to join the fight -->
+  <% school = @user.school %>
+  <% users = school.users[0..4] %>
+  <% if users.empty? %>
+     <p>Friend</p>
+  <% else %>
+    <ul>
+      <% users.each_with_index do |user, index| %>
+      <li><a draggable="true" href="" id=<%= "#{index+1}" %>><%= user.first_name %></a></li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
