@@ -1,5 +1,4 @@
 <% school = @user.school %>
-<%=  %>
 
 <div class="banner-thin" style="background-image: linear-gradient(-225deg, rgba(44, 62, 80, 0.6) 10%, rgba(76, 161, 175, 0.6) 50%), url('<%= cl_image_path("hrenp7omustctiz43hwb") %>');">
   <div class="banner-content">
@@ -13,7 +12,6 @@
 <div class="container">
   <div class="row">
     <% @user_toys.each do |toy| %>
-    <% if toy.user != current_user %>
       <div class="col-xs-12 col-sm-4">
         <% if toy.photos.first.nil? %>
           <% photo_path = ("e3b8igydl07dylxnuib9") %>
@@ -31,7 +29,6 @@
           <%= link_to "", toy_path(toy.id), class: "card-link" %>
         </div>
       </div>
-      <% end %>
     <% end %>
   </div>
 </div>
