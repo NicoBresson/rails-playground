@@ -46,6 +46,7 @@
           <%= form.input :start_time, as: :string, input_html: {class: "datepicker"} %>
           <%= form.input :end_time, as: :string, input_html: {class: "datepicker"} %>
         </div>
+        <div>Price: <div id="booking-price">0 Candies</div></div>
 
         <% if !user_signed_in? %>
 
@@ -71,7 +72,7 @@
 <% dates=[] %>
 <% @toy.transactions.each do |transaction| %>
 <% (transaction.start_time..transaction.end_time).to_a.each do |date| %>
-<% dates << date.strftime("%d/%m/%Y") %>
+<% dates << date.strftime("%m/%d/%Y") %>
 <% end %>
 <% end %>
 
@@ -83,13 +84,24 @@
       todayBtn: true,
       clearBtn: true,
       startDate: "today",
-      format: "dd/mm/yyyy",
       daysOfWeekDisabled: "0",
       todayHighlight: true,
       datesDisabled: <%= raw dates %>
     });
-  });
+    $(document).click(function(){
+      var parts = $('#transaction_start_time')[0].value.split('/');
+      var beg = new Date (parts[2], parts[0]-1,parts[1]);
+      var parts = $('#transaction_end_time')[0].value.split('/');
+      var end = new Date (parts[2],parts[0]-1,parts[1]);
+      var days = (end - beg) / (1000*60*60*24);
+      var price = <%= raw @toy.price %>;
+      if (Number.isInteger(Math.abs((Math.round(days) + 1) * price))) {
+        $("#booking-price").text(Math.abs((Math.round(days) + 1) * price) + ' Candies')
+      }
+    });
+    });
 </script>
+
 <% end %>
 
 
