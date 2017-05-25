@@ -9,19 +9,16 @@
 
 <br>
 
-<!-- determination of the photo_path -->
-
-<% if toy.photos.first.nil? %>
-  <% photo_path = ("e3b8igydl07dylxnuib9") %>
-<% else %>
-  <% photo_path = toy.photos.first.path %>
-<% end %>
-
 <!-- construction of the cards -->
 
 <div class="container">
   <div class="row">
     <% @toys.each do |toy| %>
+      <% if toy.photos.first.nil? %>
+        <% photo_path = ("e3b8igydl07dylxnuib9") %>
+      <% else %>
+        <% photo_path = toy.photos.first.path %>
+      <% end %>
     <% if toy.user != current_user %>
       <div class="col-xs-12 col-sm-4">
         <div class="card" style="background-image: linear-gradient(-225deg, rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('<%= cl_image_path photo_path %>');">
