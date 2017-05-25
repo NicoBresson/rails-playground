@@ -9,5 +9,6 @@ Rails.application.routes.draw do
   resources :toys do
     resources :transactions , only: [:index, :new, :create]
   end
+  resources :transactions, only: [:update]
   mount Attachinary::Engine => "/attachinary"
 end

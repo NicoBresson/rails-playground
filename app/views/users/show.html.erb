@@ -93,17 +93,53 @@
     <span class="spacer-logo"><%= cl_image_tag("q8they1jgywwis2ichxb", width: 40, height: 40,  crop: :fit) %></span>
   </div>
 
-  <!-- remove the section below and put a div instead -->
-  <section class="ss-style-doublediagonal">
-    <div class="dashboard">
-      <div class="assets">
+  <!-- Lets find out my sales and my purchas history -->
+  <% sales = [] %>
+  <% my_toys = Toy.where(user_id: @user.id) %>
+  <% my_toys.each do |toy| %>
+  <% sales << Transaction.where(toy_id: toy.id)[0] if !Transaction.where(toy_id: toy.id)[0].nil? %>
+  <% end %>
 
+  <% purchases = [] %>
+  <% @user.transactions.each do |transaction| %>
+  <% purchases << transaction %>
+  <% end %>
+
+<!-- section is used to have a nice demarcation. See css in _showuser.scss -->
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        <h2>My sales</h2>
+        <% sales.each do |transaction| %>
+          <p> Toy: <%= Toy.find(transaction.toy_id).name %></p>
+          <p> Who wants it: <%= transaction.user.first_name %></p>
+          <p> From: <%= transaction.start_time %> to <%= transaction.end_time %></p>
+          <% if transaction.validated %>
+            <div class="btn btn-success">Approved</div>
+          <% else %>
+            <%= simple_form_for transaction do |f| %>
+              <%= f.input :validated, input_html: { value: true }, as: :hidden %>
+              <%= f.submit "Pending request: Accept?", class: "btn btn-warning" %>
+            <% end %>
+          <% end %>
+          <hr>
+        <% end %>
       </div>
-      <div class="liabilities">
-
+      <div class="col-xs-12  col-sm-6">
+        <h2>My purchases</h2>
+        <% purchases.each do |transaction| %>
+          <p> Toy: <%= Toy.find(transaction.toy_id).name %></p>
+          <p> From: <%= transaction.start_time %> to <%= transaction.end_time %></p>
+          <% if transaction.validated %>
+          <div class="btn btn-success">Approved</div>
+          <% else %>
+          <div class="btn btn-warning">Pending...</div>
+          <% end %>
+          <hr>
+        <% end %>
       </div>
     </div>
-  </section>
+  </div>
 
   <div>
     <% @user.transactions.each do |transaction| %>
@@ -112,5 +148,4 @@
       </ul>
     <% end %>
   </div>
-
 </div>
