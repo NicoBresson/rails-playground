@@ -1,8 +1,6 @@
 .tabs {
-  background: #F9F9F9;
   display: block;
   flex: 0 0 10%;
-  margin: 10px;
 }
 .tabs a {
   color: rgb(44, 62, 80);
@@ -25,10 +23,12 @@
   font-size: 20px;
   font-weight: bolder;
   border-radius: 4px;
+  background-color: $blue;
+  margin-top: 20px;
 }
 
 .tab.active {
-  background-color: $gray;
+  background-color: $yellow;
   color: white;
 }
 .tab-content {
@@ -39,4 +39,6 @@
   font-weight: bold;
 }
 
-
+.tab.fa {
+  padding: 0px;
+}

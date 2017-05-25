@@ -9,7 +9,7 @@ $(document).ready(function() {
     // Show target tab-content (use class="hidden")
     var active = $(this).data("target");
     $(active).removeClass("hidden");
-    $('html, body').animate({scrollTop: '+=300px'}, 400);
+    // $('html, body').animate({scrollTop: '+=300px'}, 400);
   });
 
   $("#slideshow > div:gt(0)").hide();
