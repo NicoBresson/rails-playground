@@ -30,4 +30,21 @@
  margin-left: 10px;
 }
 
+.box #price {
+  display: flex;
+  margin: 20px 0px;
+  font-weight: bold;
+  align-items: center;
+}
+
+.box #price #booking-price {
+  margin: 20px 0px;
+  font-weight: bold;
+  font-size: 30px;
+  font-family: 'Indie Flower';
+  flex: 1 0 auto;
+  text-align: center;
+  color: $red;
+}
+
 
