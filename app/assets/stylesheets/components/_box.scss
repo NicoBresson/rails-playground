@@ -1,0 +1,20 @@
+.box {
+  background-color: white;
+  margin: 20px 0px;
+  padding: 10px;
+}
+
+.box.description {
+    flex: 0 0 60%;
+}
+
+.box.booking {
+    flex: 0 0 30%;
+}
+
+.flexbox {
+  display: flex;
+  justify-content: space-around;
+}
+
+
