@@ -44,67 +44,74 @@
     </div>
   </div>
 
-<div class="profile-wrapper">
-  <div class="tabs profile-choice">
-    <a class="tab active" data-target="#card-choice">
-      <i class="fa fa-caret-right" aria-hidden="true"> Card</i>
-    </a>
-    <a class="tab" data-target="#pog-choice">
-      <i class="fa fa-caret-right" aria-hidden="true"> Pogs</i>
-    </a>
-    <a class="tab" data-target="#other-choice">
-      <i class="fa fa-caret-right" aria-hidden="true"> Other</i>
-    </a>
-  </div>
-  <div class="profile-portfolio">
-    <div id="slideshow">
-       <% @user.toys.each do |toy| %>
-         <div>
-           <% if toy.photos.first.nil? %>
-             <% photo_path = ("e3b8igydl07dylxnuib9") %>
-           <% else %>
-             <% photo_path = toy.photos.first.path %>
-           <% end %>
-           <div class="card" style="background-image: linear-gradient(-225deg, rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('<%= cl_image_path photo_path %>');">
-             <div class="card-category"><%= @user.first_name %></div>
-             <div class="card-description">
-               <h2><%= toy.name %></h2>
-               <p><%= toy.description unless toy.description.nil? %></p>
+<div class="container-user">
+  <div class="profile-wrapper">
+    <div class="tabs profile-choice">
+      <a class="tab active" data-target="#card-choice">
+        <i class="fa fa-caret-right" aria-hidden="true"> Card</i>
+      </a>
+      <a class="tab" data-target="#pog-choice">
+        <i class="fa fa-caret-right" aria-hidden="true"> Pogs</i>
+      </a>
+      <a class="tab" data-target="#other-choice">
+        <i class="fa fa-caret-right" aria-hidden="true"> Other</i>
+      </a>
+    </div>
+    <div class="profile-portfolio">
+      <div id="slideshow">
+         <% @user.toys.each do |toy| %>
+           <div>
+             <% if toy.photos.first.nil? %>
+               <% photo_path = ("e3b8igydl07dylxnuib9") %>
+             <% else %>
+               <% photo_path = toy.photos.first.path %>
+             <% end %>
+             <div class="card" style="background-image: linear-gradient(-225deg, rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('<%= cl_image_path photo_path %>');">
+               <div class="card-category"><%= @user.first_name %></div>
+               <div class="card-description">
+                 <h2><%= toy.name %></h2>
+                 <p><%= toy.description unless toy.description.nil? %></p>
+               </div>
+               <%= link_to "", toy_path(toy.id), class: "card-link" %>
              </div>
-             <%= link_to "", toy_path(toy.id), class: "card-link" %>
            </div>
-         </div>
-        <% end %>
-        <div>
-          <%= link_to 'Add a toy!', new_toy_path, class: "navbar-wagon-item navbar-wagon-button btn" %>
-        </div>
+          <% end %>
+          <div>
+            <%= link_to 'Add a toy!', new_toy_path, class: "navbar-wagon-item navbar-wagon-button btn" %>
+          </div>
+      </div>
+    </div>
+    <div class="profile-picture">
+      <% if current_user.photo.nil? %>
+        <% avatar_pict_path = cl_image_path('mtbg4ch4wojpwppzfhem') %>
+      <% else  %>
+        <% avatar_pict_path = current_user.photo.path %>
+      <% end %>
+      <% avatar_url = current_user.facebook_picture_url || avatar_pict_path %>
+      <% if avatar_url == current_user.facebook_picture_url %>
+        <%= image_tag avatar_url, class: "avatar-picture" %>
+      <% else %>
+        <%= cl_image_tag avatar_url, class: "avatar-picture" %>
+      <% end %>
+      <div class="profile-content">
+        <h3><%= @user.first_name %></h3>
+        <p>
+          <% if @user.school_id == nil%>
+            <%= link_to "join a school!", edit_user_path(current_user) %>
+          <% else %>
+            <% school= School.find(@user.school_id) %>
+            <%= link_to school.name, school_path(school) %>
+          <% end %>
+        </p>
+        <p><%= link_to "Edit", edit_user_path(@user) %></p>
+      </div>
     </div>
   </div>
-  <div class="profile-picture">
-    <% if current_user.photo.nil? %>
-      <% avatar_pict_path = cl_image_path('mtbg4ch4wojpwppzfhem') %>
-    <% else  %>
-      <% avatar_pict_path = current_user.photo.path %>
-    <% end %>
-    <% avatar_url = current_user.facebook_picture_url || avatar_pict_path %>
-    <% if avatar_url == current_user.facebook_picture_url %>
-      <%= image_tag avatar_url, class: "avatar-picture" %>
-    <% else %>
-      <%= cl_image_tag avatar_url, class: "avatar-picture" %>
-    <% end %>
-    <div class="profile-content">
-      <h3><%= @user.first_name %></h3>
-      <p>
-        <% if @user.school_id == nil%>
-          <%= link_to "join a school!", edit_user_path(current_user) %>
-        <% else %>
-          <% school= School.find(@user.school_id) %>
-          <%= link_to school.name, school_path(school) %>
-        <% end %>
-      </p>
-      <p><%= link_to "Edit", edit_user_path(@user) %></p>
-    </div>
-  </div>
+
+  <section class="ss-style-doublediagonal">
+    <h1>Some content</h1>
+    <p>test</p>
+  </section>
 </div>
 
 <div class="user-dashboard hidden">
