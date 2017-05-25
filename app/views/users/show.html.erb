@@ -94,50 +94,49 @@
   </div>
 
   <!-- Lets find out my sales and my purchas history -->
-  <% purchases = [] %>
+  <% sales = [] %>
   <% my_toys = Toy.where(user_id: @user.id) %>
   <% my_toys.each do |toy| %>
-  <% purchases << Transaction.where(toy_id: toy.id)[0] if !Transaction.where(toy_id: toy.id)[0].nil? %>
+  <% sales << Transaction.where(toy_id: toy.id)[0] if !Transaction.where(toy_id: toy.id)[0].nil? %>
   <% end %>
 
-  <% sales = [] %>
+  <% purchases = [] %>
   <% @user.transactions.each do |transaction| %>
-  <% sales << transaction %>
+  <% purchases << transaction %>
   <% end %>
 
 <!-- section is used to have a nice demarcation. See css in _showuser.scss -->
   <div class="container">
     <div class="row">
       <div class="col-xs-12 col-sm-6">
-          <div>
-            <h2>My purchases</h2>
-            <% purchases.each do |transaction| %>
-                <div class="">
-                  <p> Toy: <%= Toy.find(transaction.toy_id).name %></p>
-                  <p> Start: <%= transaction.start_time %></p>
-                  <p> End: <%= transaction.end_time %></p>
-                  <hr>
-                </div>
-                <% end %>
-          </div>
-        </div>
-        <div class="col-xs-12  col-sm-6">
-          <div>
-            <h2>My sales</h2>
-            <% sales.each do |transaction| %>
-              <div>
-                <p> Toy: <%= Toy.find(transaction.toy_id).name %></p>
-                <p> Start: <%= transaction.start_time %></p>
-                <p> End: <%= transaction.end_time %></p>
-                <% if transaction.validated %>
-                  <div class="">Approved</div>
-                <% else %>
-                  <div class="btn btn-warning">Pending: Accept?</div>
-                <% end %>
-                <hr>
-              </div>
+        <h2>My sales</h2>
+        <% sales.each do |transaction| %>
+          <p> Toy: <%= Toy.find(transaction.toy_id).name %></p>
+          <p> Who wants it: <%= transaction.user.first_name %></p>
+          <p> From: <%= transaction.start_time %> to <%= transaction.end_time %></p>
+          <% if transaction.validated %>
+            <div class="btn btn-success">Approved</div>
+          <% else %>
+            <%= simple_form_for transaction do |f| %>
+              <%= f.input :validated, input_html: { value: true }, as: :hidden %>
+              <%= f.submit "Pending request: Accept?", class: "btn btn-warning" %>
             <% end %>
-          </div>
+          <% end %>
+          <hr>
+        <% end %>
+      </div>
+      <div class="col-xs-12  col-sm-6">
+        <h2>My purchases</h2>
+        <% purchases.each do |transaction| %>
+          <p> Toy: <%= Toy.find(transaction.toy_id).name %></p>
+          <p> From: <%= transaction.start_time %> to <%= transaction.end_time %></p>
+          <% if transaction.validated %>
+          <div class="btn btn-success">Approved</div>
+          <% else %>
+          <div class="btn btn-warning">Pending...</div>
+          <% end %>
+          <hr>
+        <% end %>
       </div>
     </div>
   </div>

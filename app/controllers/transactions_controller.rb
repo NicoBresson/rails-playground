@@ -18,6 +18,12 @@ class TransactionsController < ApplicationController
     end
   end
 
+  def update
+    @transaction = Transaction.find(params[:id])
+    @transaction.validated = params[:transaction][:validated]
+    @transaction.save
+    redirect_to user_path(current_user)
+  end
   private
 
   def transaction_params
