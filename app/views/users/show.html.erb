@@ -69,15 +69,45 @@
     </div>
   </div>
 
-  <!-- section is used to have a nice demarcation. See css in _showuser.scss -->
+  <!-- Lets find out my assets and my liabilities -->
+  <% buy_requests = @user.transactions %>
+  <% liabilities = [] %>
+  <% buy_requests.each do |transaction| %>
+    <% liabilities << Toy.find(transaction.toy_id) %>
+  <% end %>
+
+  <% my_toys = Toy.where(user_id: @user.id) %>
+  <% assets = [] %>
+  <% my_toys.each do |toy| %>
+    <% sale_requests = Transaction.where(toy_id: toy.id)[0] %>
+    <% assets << Toy.find(sale_requests.toy_id) if !sale_requests.nil?%>
+  <% end %>
+
+<!-- section is used to have a nice demarcation. See css in _showuser.scss -->
   <section class="ss-style-doublediagonal">
-    <div class="dashboard">
-      <div class="assets">
-
-      </div>
-      <div class="liabilities">
-
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+          <div class="assets">
+            <h2>My assets</h2>
+            <ul>
+              <% assets.each do |asset| %>
+                <li><%= asset.name %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+        <div class="col-xs-12  col-sm-6">
+          <div class="liabilities">
+            <h2>My liabilities</h2>
+            <ul>
+              <% liabilities.each do |liabilitie| %>
+                <li><%= liabilitie.name %></li>
+              <% end %>
+            </ul>
+          </div>
       </div>
     </div>
+  </div>
   </section>
 </div>
