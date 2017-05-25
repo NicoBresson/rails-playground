@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: :home
+  skip_before_action :authenticate_user!, only: [:home, :search]
   def home
     @schools = School.where.not(latitude: nil)
     @hash = Gmaps4rails.build_markers(@schools) do |school, marker|
@@ -17,6 +17,5 @@ class PagesController < ApplicationController
       marker.lng school.longitude
       marker.infowindow render_to_string(partial: "/pages/school_map_box", locals: { school: school })
     end
-    # TODO: Try to redirect to /search#map-container
   end
 end
