@@ -1,38 +1,34 @@
-<% school = School.find(params[:id]) %>
+<% school = @user.school %>
 
 <div class="banner-thin" style="background-image: linear-gradient(-225deg, rgba(44, 62, 80, 0.6) 10%, rgba(76, 161, 175, 0.6) 50%), url('<%= cl_image_path("hrenp7omustctiz43hwb") %>');">
   <div class="banner-content">
-    <h1><%= school.name %></h1>
-    <p>Choose a toy!!</p>
+    <h1>Hey <%= @user.first_name %>! Have a look at your toys</h1>
+    <p><%= school.name %></p>
   </div>
 </div>
 
 <br>
 
-<!-- construction of the cards -->
-
 <div class="container">
   <div class="row">
-    <% @toys.each do |toy| %>
-      <% if toy.photos.first.nil? %>
-        <% photo_path = ("e3b8igydl07dylxnuib9") %>
-      <% else %>
-        <% photo_path = toy.photos.first.path %>
-      <% end %>
-    <% if toy.user != current_user %>
+    <% @user_toys.each do |toy| %>
       <div class="col-xs-12 col-sm-4">
+        <% if toy.photos.first.nil? %>
+          <% photo_path = ("e3b8igydl07dylxnuib9") %>
+        <% else %>
+          <% photo_path = toy.photos.first.path %>
+        <% end %>
         <div class="card" style="background-image: linear-gradient(-225deg, rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('<%= cl_image_path photo_path %>');">
-          <div class="card-category"><%= toy.user.first_name %></div>
+          <div class="card-category"><%= @user.first_name %></div>
           <div class="card-description">
             <h2><%= toy.name %></h2>
             <p><%= toy.description unless toy.description.nil? %></p>
           </div>
-          <% avatar_url = toy.user.facebook_picture_url || cl_image_path('mtbg4ch4wojpwppzfhem') %>
+          <% avatar_url = @user.facebook_picture_url || cl_image_path('mtbg4ch4wojpwppzfhem') %>
           <%= image_tag avatar_url, class: "card-user avatar" %>
           <%= link_to "", toy_path(toy.id), class: "card-link" %>
         </div>
       </div>
-      <% end %>
     <% end %>
   </div>
 </div>
