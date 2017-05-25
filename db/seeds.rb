@@ -79,3 +79,18 @@ puts 'Invoke pokemons'
 end
 
 puts 'Catch\'em all'
+
+puts 'Starting deals'
+
+1000.times do
+  transaction = Transaction.new({
+    start_time: Date.today(),
+    end_time: Date.today() + (1..6).to_a.sample
+    })
+  transaction.toy = Toy.all.sample
+  transaction.user = User.all.sample
+  transaction.save
+end
+
+puts 'The King of the School'
+

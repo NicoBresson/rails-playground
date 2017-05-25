@@ -104,4 +104,13 @@
       </div>
     </div>
   </section>
+
+  <div>
+    <% @user.transactions.each do |transaction| %>
+      <ul>
+        <li><%= transaction.id %> | <%= transaction.validated %> | <%= "*" *transaction.rating %></li>
+      </ul>
+    <% end %>
+  </div>
+
 </div>
