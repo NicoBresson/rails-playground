@@ -38,9 +38,9 @@
       <!-- Thumbnail-->
           <div class="card">
             <div class="thumbnail">
-              <div class="card-user avatar">
+              <div>
                 <% avatar_url = toy.user.facebook_picture_url || cl_image_path('mtbg4ch4wojpwppzfhem') %>
-                <%= image_tag avatar_url, class: "card-user avatar" %>
+                <%= image_tag avatar_url, class: "card-user" %>
               </div>
               <%= cl_image_tag photo_path, class: "card-image" %>
               <%= link_to "", toy_path(toy.id), class: "card-link" %>
