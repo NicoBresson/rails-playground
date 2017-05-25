@@ -12,9 +12,22 @@
     flex: 0 0 30%;
 }
 
+.box .btn {
+  margin-top: 10px;
+}
+
 .flexbox {
   display: flex;
   justify-content: space-around;
+}
+
+.box .product-info {
+ display: flex;
+}
+
+.box .product-details {
+ flex: 0 0 auto;
+ margin-left: 10px;
 }
 
 
