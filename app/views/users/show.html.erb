@@ -1,51 +1,6 @@
-<div class="profile-wrapper hidden">
-  <h1 class="text-center">Welcome to your secret lair <%= @user.first_name %></h1>
-
-  <div class="profile-information">
-    <div class="profile-left">
-      <h2>Your profile</h2>
-      <ul>
-        <li><%= @user.first_name %></li>
-        <li><%= @user.last_name %></li>
-        <li>
-          <% if @user.school_id == nil%>
-            <%= link_to "join a school!", edit_user_path(current_user) %>
-          <% else %>
-            <% school= School.find(@user.school_id) %>
-            <%= link_to school.name, school_path(school) %>
-          <% end %>
-        </li>
-      </ul>
-      <%= link_to "Edit", edit_user_path(@user) %>
-    </div>
-
-    <div class="profile-right">
-      <% if current_user.photo.nil? %>
-        <% avatar_pict_path = cl_image_path('mtbg4ch4wojpwppzfhem') %>
-      <% else  %>
-        <% avatar_pict_path = current_user.photo.path %>
-      <% end %>
-      <% avatar_url = current_user.facebook_picture_url || avatar_pict_path %>
-      <% if avatar_url == current_user.facebook_picture_url %>
-        <%= image_tag avatar_url, class: "avatar-picture picture-right" %>
-      <% else %>
-        <%= cl_image_tag avatar_url, class: "avatar-picture picture-right" %>
-      <% end %>
-    </div>
-  </div>
-
-    <div class="tabs">
-      <a class="tab active" data-target="#assets">
-        <h3>Assets</h3>
-      </a>
-      <a class="tab" data-target="#liabilities">
-        <h3>Liabilities</h3>
-      </a>
-    </div>
-  </div>
-
 <div class="container-user">
   <div class="profile-wrapper">
+    <!-- preparation of the tab selection to change the slideshow. css in _tabs.scss -->
     <div class="tabs profile-choice">
       <a class="tab active" data-target="#card-choice">
         <i class="fa fa-caret-right" aria-hidden="true"> Card</i>
@@ -57,6 +12,7 @@
         <i class="fa fa-caret-right" aria-hidden="true"> Other</i>
       </a>
     </div>
+    <!-- slideshow to see toys per category -->
     <div class="profile-portfolio">
       <div id="slideshow">
          <% @user.toys.each do |toy| %>
@@ -81,6 +37,7 @@
           </div>
       </div>
     </div>
+    <!-- profile information and editing -->
     <div class="profile-picture">
       <% if current_user.photo.nil? %>
         <% avatar_pict_path = cl_image_path('mtbg4ch4wojpwppzfhem') %>
@@ -108,85 +65,15 @@
     </div>
   </div>
 
+  <!-- section is used to have a nice demarcation. See css in _showuser.scss -->
   <section class="ss-style-doublediagonal">
-    <h1>Some content</h1>
-    <p>test</p>
+    <div class="dashboard">
+      <div class="assets">
+
+      </div>
+      <div class="liabilities">
+
+      </div>
+    </div>
   </section>
-</div>
-
-<div class="user-dashboard hidden">
-  <div class="tab-content hidden">
-    <div class="text-center">
-      <i class="fa fa-hand-o-up" aria-hidden="true"></i>
-      <h2 id="dashboard">Have a look at your Dashboard!</h2>
-    </div>
-  </div>
-
-  <div class="tab-content" id="assets">
-    <h2 class= "text-center">Your Toys</h2>
-    <div class="container">
-      <div class="row">
-        <% @user.toys.each do |toy| %>
-        <div class="col-xs-12 col-sm-4">
-          <% if toy.photos.first.nil? %>
-            <% photo_path = ("e3b8igydl07dylxnuib9") %>
-          <% else %>
-            <% photo_path = toy.photos.first.path %>
-          <% end %>
-          <div class="card" style="background-image: linear-gradient(-225deg, rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('<%= cl_image_path photo_path %>');">
-            <div class="card-category"><%= toy.user.first_name %></div>
-            <div class="card-description">
-              <h2><%= toy.name %></h2>
-              <p><%= toy.description unless toy.description.nil? %></p>
-            </div>
-            <% avatar_url = current_user.facebook_picture_url || cl_image_path('mtbg4ch4wojpwppzfhem') %>
-            <%= image_tag avatar_url, class: "card-user avatar" %>
-            <%= link_to "", toy_path(toy.id), class: "card-link" %>
-          </div>
-        </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
-
-  <div class="tab-content hidden" id="liabilities">
-    <h2 class="text-center">Toys you borrowed</h2>
-    <div class="container">
-      <div class="row">
-        <% @user.transactions.each do |transaction| %>
-        <div class="col-xs-12 col-sm-4">
-          <% if transaction.toy.photos.first.nil? %>
-            <% photo_path = ("e3b8igydl07dylxnuib9") %>
-          <% else %>
-            <% photo_path = transaction.toy.photos.first.path %>
-          <% end %>
-          <div class="card" style="background-image: linear-gradient(-225deg, rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('<%= cl_image_path photo_path %>');">
-            <div class="card-category"><%= transaction.user.first_name %></div>
-            <div class="card-description">
-              <h2><%= transaction.toy.name %></h2>
-              <p><%= transaction.toy.description unless transaction.toy.description.nil? %></p>
-            </div>
-            <div class="card-status">
-              <% if transaction.validated == nil %>
-                  <ul class="list-inline">
-                    <li>
-                      <i class="fa fa-question-circle" aria-hidden="true"></i>
-                    </li>
-                    <li>
-                      <p>Pending</p>
-                    </li>
-                  </ul>
-              <% else %>
-
-              <% end %>
-            </div>
-            <% avatar_url = transaction.toy.user.facebook_picture_url || cl_image_path('mtbg4ch4wojpwppzfhem') %>
-            <%= image_tag avatar_url, class: "card-user avatar" %>
-            <%= link_to "", toy_path(transaction.toy.id), class: "card-link" %>
-          </div>
-        </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
 </div>
