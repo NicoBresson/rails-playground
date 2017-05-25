@@ -36,9 +36,6 @@
              </div>
            </div>
           <% end %>
-          <div>
-            <%= link_to 'Add a toy!', new_toy_path, class: "navbar-wagon-item navbar-wagon-button btn" %>
-          </div>
       </div>
     </div>
     <!-- profile information and editing -->
@@ -70,6 +67,11 @@
   </div>
 
   <!-- section is used to have a nice demarcation. See css in _showuser.scss -->
+  <div class="spacer">
+    <div class="mask"></div>
+    <span class="spacer-logo"><%= cl_image_tag("q8they1jgywwis2ichxb", width: 40, height: 40,  crop: :fit) %></span>
+  </div>
+
   <section class="ss-style-doublediagonal">
     <div class="dashboard">
       <div class="assets">
