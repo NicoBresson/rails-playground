@@ -1,79 +1,89 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-      <h1><%= @toy.name %></h1>
-      <p>Photo of the <% unless @toy.category == "other" %>
-        <%= @toy.category %>
+<!-- Toy dedicated card -->
+<div class="flexbox">
+  <div class="container box description">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <h1><%= @toy.name %></h1>
+        <p>Category: <% @toy.category %>
+          <%= @toy.category %>
+        </p>
+
+        <div class="product-info">
+          <% if @toy.photos? %>
+          <% @toy.photos.each do |photo| %>
+          <%= cl_image_tag photo.path, width: 400, height: 300, crop: :fit %>
+          <% end %>
+          <% else %>
+          <%= cl_image_tag("e3b8igydl07dylxnuib9", width: 400, height: 300, crop: :fit) %>
+          <% end %>
+          <div class="product-details">
+            <p>Owner: <%= @toy.user.first_name %></p>
+            <p>Price per day: <%= @toy.price %></p>
+            <p>Description: <%= @toy.description %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<!-- Set hidden class for the booking if the product is owned -->
+
+  <% if @toy.user == current_user %>
+  <% hide_my_toy = "hidden" %>
+  <% else %>
+  <% hide_my_toy = "" %>
+  <% end %>
+
+<!-- Booking card -->
+
+  <div class="container box booking <%= hide_my_toy %>">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <h3>Book this toy!</h3>
+        <%= simple_form_for([@toy,@transaction]) do |form| %>
+        <div class="input-daterange input-group" id="date-picker">
+          <%= form.input :start_time, as: :string, input_html: {class: "datepicker"} %>
+          <%= form.input :end_time, as: :string, input_html: {class: "datepicker"} %>
+        </div>
+
+        <% if !user_signed_in? %>
+
+        <%= link_to "Sign-up to book!", new_user_session_path, class: "btn btn-primary" %>
+        <!-- TODO Add a callback to come back to this booking page -->
+        <% elsif current_user.school_id != @toy.user.school.id %>
+        <%= link_to "join the school to book it!", edit_user_path(current_user), class: "btn btn-primay" %>
+        <!-- TODO Pre-fill the form with the right school, and add a callback to come back to this booking page -->
+
         <% else %>
-        product
+        <%= form.button :submit, 'Book!', class:"btn btn-danger btn-lg" %>
         <% end %>
-      </p>
-
-      <% if @toy.photos? %>
-        <% @toy.photos.each do |photo| %>
-        <%= cl_image_tag photo.path, width: 400, height: 300, crop: :fit %>
         <% end %>
-      <% else %>
-        <%= cl_image_tag("e3b8igydl07dylxnuib9", width: 400, height: 300, crop: :fit) %>
-      <% end %>
-      <p>Price: <%= @toy.price %></p>
-      <p>Owner: <%= @toy.user.first_name %></p>
-      <p>Description: <%= @toy.description %></p>
-    </div>
-  </div>
-</div>
-
-<% if @toy.user == current_user %>
-<% hide_my_toy = "hidden" %>
-<% else %>
-<% hide_my_toy = "" %>
-<% end %>
-
-<div class="container <%= hide_my_toy %>">
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-      <h3>Book this toy!</h3>
-      <%= simple_form_for([@toy,@transaction]) do |form| %>
-      <div class="span5 col-md-5" id = "date-picker" style="position:static; float: none;"></div>
-      <%= form.input :start_time %>
-      <%= form.input :end_time %>
-      <% if !user_signed_in? %>
-
-      <%= link_to "Sign-up to book!", new_user_session_path, class: "btn btn-primary" %>
-      <!-- TODO Add a callback to come back to this booking page -->
-      <% elsif current_user.school_id != @toy.user.school.id %>
-      <%= link_to "join the school to book it!", edit_user_path(current_user), class: "btn btn-primay" %>
-      <!-- TODO Pre-fill the form with the right school, and add a callback to come back to this booking page -->
-
-      <% else %>
-      <%= form.button :submit, 'Book!' %>
-      <% end %>
-      <% end %>
+      </div>
     </div>
   </div>
 </div>
 
 
+
+<!-- Date picker sceript -->
 
 <% dates=[] %>
 <% @toy.transactions.each do |transaction| %>
 <% (transaction.start_time..transaction.end_time).to_a.each do |date| %>
-<% dates << date.strftime('%d/%m/%Y') %>
+<% dates << date.strftime("%d/%m/%Y") %>
 <% end %>
 <% end %>
 
 <% content_for(:js_date_picker) do %>
 <script>
-
-
   $(document).ready(function(){
-    $('#date-picker').datepicker({
-      startDate: "today",
-      format: "dd/mm/yy",
-      clearBtn: true,
-      multidate: true,
+    $('.datepicker').datepicker({
+      weekStart: 1,
       todayBtn: true,
-      forceParse: false,
+      clearBtn: true,
+      startDate: "today",
+      format: "dd/mm/yyyy",
       daysOfWeekDisabled: "0",
       todayHighlight: true,
       datesDisabled: <%= raw dates %>

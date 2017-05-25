@@ -1,0 +1,33 @@
+.box {
+  background-color: white;
+  margin: 20px 0px;
+  padding: 10px;
+}
+
+.box.description {
+    flex: 0 0 60%;
+}
+
+.box.booking {
+    flex: 0 0 30%;
+}
+
+.box .btn {
+  margin-top: 10px;
+}
+
+.flexbox {
+  display: flex;
+  justify-content: space-around;
+}
+
+.box .product-info {
+ display: flex;
+}
+
+.box .product-details {
+ flex: 0 0 auto;
+ margin-left: 10px;
+}
+
+
