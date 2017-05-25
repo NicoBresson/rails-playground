@@ -21,8 +21,14 @@
   margin-right: 25px;
   flex: 0 0 30%;
 }
-
-
+.profile-content{
+  font-size: 20px;
+  font-color: $blue;
+}
+.fa-pencil-square-o {
+  font-size: 20px;
+  font-color: $blue;
+}
 #slideshow {
   margin: 50px auto;
   position: relative;
@@ -30,7 +36,7 @@
   height: 300px;
   padding: 15px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
-  background-color: rgb(245, 245, 245);
+  background-color: $light-grey;
 }
 
 #slideshow > div {
@@ -65,6 +71,8 @@ section::after {
   pointer-events: none;
 }
 
+// separation style
+
 .ss-style-doublediagonal {
   z-index: 1;
   padding-top: 6em;
@@ -73,7 +81,7 @@ section::after {
 
 .ss-style-doublediagonal::before,
 .ss-style-doublediagonal::after {
-  top: 0;
+  top: 15px;
   left: -25%;
   z-index: -1;
   width: 150%;

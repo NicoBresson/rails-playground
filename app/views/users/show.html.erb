@@ -5,9 +5,13 @@
       <a class="tab active" data-target="#card-choice">
         <i class="fa fa-caret-right" aria-hidden="true"> Card</i>
       </a>
+      <br>
+      <br>
       <a class="tab" data-target="#pog-choice">
         <i class="fa fa-caret-right" aria-hidden="true"> Pogs</i>
       </a>
+      <br>
+      <br>
       <a class="tab" data-target="#other-choice">
         <i class="fa fa-caret-right" aria-hidden="true"> Other</i>
       </a>
@@ -60,7 +64,7 @@
             <%= link_to school.name, school_path(school) %>
           <% end %>
         </p>
-        <p><%= link_to "Edit", edit_user_path(@user) %></p>
+        <i class="fa fa-pencil-square-o" aria-hidden="true"><%= link_to "Edit", edit_user_path(@user) %></i>
       </div>
     </div>
   </div>
