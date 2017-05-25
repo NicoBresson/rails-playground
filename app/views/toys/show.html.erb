@@ -19,7 +19,7 @@
           <div class="product-details">
             <p>Owner: <%= @toy.user.first_name %></p>
             <p>Price per day: <%= @toy.price %> Candies</p>
-            <p>Description: <%= @toy.description %></p>
+            <p>Description: <div><%= @toy.description %></div></p>
           </div>
         </div>
       </div>
@@ -46,7 +46,7 @@
           <%= form.input :start_time, as: :string, input_html: {class: "datepicker"} %>
           <%= form.input :end_time, as: :string, input_html: {class: "datepicker"} %>
         </div>
-        <div>Price: <div id="booking-price">0 Candies</div></div>
+        <div id="price">Price: <div id="booking-price"> 0 Candies</div></div>
 
         <% if !user_signed_in? %>
 
@@ -57,7 +57,7 @@
         <!-- TODO Pre-fill the form with the right school, and add a callback to come back to this booking page -->
 
         <% else %>
-        <%= form.button :submit, 'Book!', class:"btn btn-danger btn-lg" %>
+        <%= form.button :submit, 'Book!', class:"btn btn-danger btn-lg btn-block" %>
         <% end %>
         <% end %>
       </div>
