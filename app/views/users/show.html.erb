@@ -45,6 +45,17 @@
   </div>
 
 <div class="profile-wrapper">
+  <div class="tabs profile-choice">
+    <a class="tab active" data-target="#card-choice">
+      <i class="fa fa-caret-right" aria-hidden="true"> Card</i>
+    </a>
+    <a class="tab" data-target="#pog-choice">
+      <i class="fa fa-caret-right" aria-hidden="true"> Pogs</i>
+    </a>
+    <a class="tab" data-target="#other-choice">
+      <i class="fa fa-caret-right" aria-hidden="true"> Other</i>
+    </a>
+  </div>
   <div class="profile-portfolio">
     <div id="slideshow">
        <% @user.toys.each do |toy| %>
