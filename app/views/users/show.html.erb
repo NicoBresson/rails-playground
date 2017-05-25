@@ -69,35 +69,52 @@
     </div>
   </div>
 
-  <!-- Lets find out my assets and my liabilities -->
+  <!-- Lets find out my sales and my purchas history -->
+  <% purchases = [] %>
+  <% my_toys = Toy.where(user_id: @user.id) %>
+  <% my_toys.each do |toy| %>
+  <% purchases << Transaction.where(toy_id: toy.id)[0] if !Transaction.where(toy_id: toy.id)[0].nil? %>
+  <% end %>
+
+  <% sales = [] %>
+  <% @user.transactions.each do |transaction| %>
+  <% sales << transaction %>
+  <% end %>
 
 <!-- section is used to have a nice demarcation. See css in _showuser.scss -->
-  <section class="ss-style-doublediagonal">
   <div class="container">
     <div class="row">
       <div class="col-xs-12 col-sm-6">
-          <div class="purchases">
+          <div>
             <h2>My purchases</h2>
-            <ul>
-              <% my_toys = Toy.where(user_id: @user.id) %>
-              <% my_toys.each do |toy| %>
-                <% transaction = Transaction.where(toy_id: toy.id)[0] %>
-                <%= transaction.toy if !transaction.nil? %>
-              <% end %>
-            </ul>
+            <% purchases.each do |transaction| %>
+                <div class="">
+                  <p> Toy: <%= Toy.find(transaction.toy_id).name %></p>
+                  <p> Start: <%= transaction.start_time %></p>
+                  <p> End: <%= transaction.end_time %></p>
+                  <hr>
+                </div>
+                <% end %>
           </div>
         </div>
         <div class="col-xs-12  col-sm-6">
-          <div class="sales">
+          <div>
             <h2>My sales</h2>
-            <ul>
-              <% @user.transactions.each do |transaction| %>
-                <li><%= transaction.toy %></li>
-              <% end %>
-            </ul>
+            <% sales.each do |transaction| %>
+              <div>
+                <p> Toy: <%= Toy.find(transaction.toy_id).name %></p>
+                <p> Start: <%= transaction.start_time %></p>
+                <p> End: <%= transaction.end_time %></p>
+                <% if transaction.validated %>
+                  <div class="">Approved</div>
+                <% else %>
+                  <div class="btn btn-warning">Pending: Accept?</div>
+                <% end %>
+                <hr>
+              </div>
+            <% end %>
           </div>
       </div>
     </div>
   </div>
-  </section>
 </div>
