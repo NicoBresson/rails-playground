@@ -84,8 +84,8 @@ puts 'Starting deals'
 
 1000.times do
   transaction = Transaction.new({
-    start_time: Date.today(),
-    end_time: Date.today() + (1..6).to_a.sample
+    start_time: Date.today,
+    end_time: Date.today + (1..6).to_a.sample
     })
   transaction.toy = Toy.all.sample
   transaction.user = User.all.sample
