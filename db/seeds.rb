@@ -58,7 +58,7 @@ puts 'Import 200 beautiful kids'
     last_name: Faker::Name.last_name,
     email: Faker::Internet.email,
     password: "123456",
-    password_confirmation: "123456",
+    password_confirmation: "123456"
     })
   user.school = School.all.sample
   user.save
@@ -85,8 +85,8 @@ puts 'Starting deals'
 1000.times do
   transaction = Transaction.new({
     start_time: Date.today,
-    end_time: (Date.today + (1..6).to_a.sample),
-    rating: (0..5).to_a.sample,
+    end_time: Date.today + 2.days,
+    rating: (0..5).to_a.sample
     })
   transaction.toy = Toy.all.sample
   transaction.user = User.all.sample
