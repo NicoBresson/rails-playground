@@ -21,6 +21,7 @@ class TransactionsController < ApplicationController
   def update
     @transaction = Transaction.find(params[:id])
     @transaction.validated = params[:transaction][:validated]
+    @transaction.rating = params[:transaction][:rating]
     @transaction.save
     redirect_to user_path(current_user)
   end
