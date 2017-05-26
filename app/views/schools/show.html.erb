@@ -44,7 +44,15 @@
                 <p><%= link_to "", toy_path(toy.id), class: "btn card-link" %></p>
               </div>
               <div class="post-meta">
-                <span class="timestamp"><i class="fa fa-clock-">o</i> 6 mins ago</span><span class="comments"><i class="fa fa-comments"></i><a rel="nofollow" rel="noreferrer"href="#"> 39 comments</a></span>
+                <span class="rating">Last rating:
+                <% if toy.transactions.last %>
+                  <% toy.transactions.last.rating.times do %>
+                    <i class="fa fa-star"></i>
+                  <% end %>
+                <% else %>
+                <span>be the first to book it!</span>
+                <% end %>
+                </span>
               </div>
             </div>
           </div>

@@ -1,0 +1,6 @@
+// // Here you will write *javascript* that would be executed by the browser
+
+$('#sale-transaction-<%= @transaction.id %>').html('<%= j render 'transactions/sale_form', transaction: @transaction %>');
+
+$('#purchase-transaction-<%= @transaction.id %>').html('<%= j render 'transactions/purchase_form', transaction: @transaction %>');
+

@@ -1,0 +1,36 @@
+<p><strong> Toy: <%= Toy.find(transaction.toy_id).name %></strong></p>
+<p> From: <%= transaction.start_time %> to <%= transaction.end_time %></p>
+<%= link_to "see transaction details...", transactions_bagarre_path(transaction)%>
+<% if transaction.validated %>
+<i class="fa fa-check green" aria-hidden="true"> Approved</i>
+
+<!-- rating system -->
+<div style="display: flex; align-items:center">
+  <% new_rating = transaction.rating == 5 ? 0 : transaction.rating + 1 %>
+  <% 1..transaction.rating.times do %>
+  <%= simple_form_for transaction do |f| %>
+  <% new_rating = transaction.rating == 5 ? 0 : transaction.rating + 1 %>
+  <%= f.input :rating, input_html: { value: new_rating }, as: :hidden %>
+  <%= f.input :validated, input_html: { value: true }, as: :hidden %>
+  <%= button_tag(type: 'submit', style:"border:none; background-color:transparent") do %>
+  <i class="fa fa-star"></i>
+  <% end %>
+  <% end %>
+  <% end %>
+  <% 1..(5-transaction.rating).times do %>
+  <%= simple_form_for transaction do |f| %>
+  <% new_rating = transaction.rating == 5 ? 0 : transaction.rating + 1 %>
+  <%= f.input :rating, input_html: { value: new_rating }, as: :hidden %>
+  <%= f.input :validated, input_html: { value: true }, as: :hidden %>
+  <%= button_tag(type: 'submit', style:"border:none; background-color:transparent") do %>
+  <i class="fa fa-star-o"></i>
+  <% end %>
+  <% end %>
+  <% end %>
+</div>
+<!-- rating system END -->
+
+<% else %>
+<i class="fa fa-hourglass-half orange" aria-hidden="true">Waiting for approval...</i>
+<% end %>
+<hr>
