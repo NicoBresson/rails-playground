@@ -20,7 +20,8 @@ class TransactionsController < ApplicationController
 
   def update
     @transaction = Transaction.find(params[:id])
-    @transaction.validated = params[:transaction][:validated] # TODO: why does it work even if it has not been permitted?
+    @transaction.validated = params[:transaction][:validated]
+    @transaction.rating = params[:transaction][:rating]
     @transaction.save
     respond_to do |format|
         format.html { redirect_to user_path(current_user) }
