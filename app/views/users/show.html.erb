@@ -114,6 +114,7 @@
           <% sales.each do |transaction| %>
             <p> <strong>Toy: <%= Toy.find(transaction.toy_id).name %></strong></p>
             <p> From: <%= transaction.start_time %> to <%= transaction.end_time %></p>
+            <%#= link_to "see transaction details..." transactions_bagarre_path(transaction)%>
             <% if transaction.validated %>
               <i class="fa fa-check green" aria-hidden="true"> Approved</i>
             <% elsif transaction.validated.nil? %>
@@ -144,6 +145,7 @@
           <% purchases.each do |transaction| %>
             <p><strong> Toy: <%= Toy.find(transaction.toy_id).name %></strong></p>
             <p> From: <%= transaction.start_time %> to <%= transaction.end_time %></p>
+              <%#= link_to "see transaction details..." transactions_bagarre_path(transaction)%>
             <% if transaction.validated %>
               <i class="fa fa-check green" aria-hidden="true"> Approved</i>
             <% else %>
