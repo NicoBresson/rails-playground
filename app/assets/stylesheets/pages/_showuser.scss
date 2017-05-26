@@ -25,21 +25,25 @@
   font-color: $blue;
 }
 #slideshow {
-  margin: 0px auto;
+  overflow:hidden;
   position: relative;
-  width: 300px;
-  height: 300px;
+  width: 320px;
+  height: 350px;
   padding: 15px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
-  background-color: $light-grey;
+  opacity: 1;
 }
 
 #slideshow > div {
   position: absolute;
-  top: 10px;
-  left: 10px;
-  right: 10px;
-  bottom: 10px;
+  padding: 10px;
+  overflow: hidden;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  width: 100%;
+  height: 100%;
   text-align: center;
   vertical-align: center;
 }

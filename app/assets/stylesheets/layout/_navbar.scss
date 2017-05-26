@@ -6,6 +6,7 @@
   display: flex;
   height: 70px;
   padding: 0px 30px;
+  margin-bottom: 1px;
   align-items: center;
   justify-content: space-between;
   .mask {
@@ -26,6 +27,9 @@
   font-weight: bold;
   color: #2C3E50;
   font-size: 25px;
+}
+.logo-content:hover {
+  cursor:pointer !important;
 }
 
 .list-inline {
@@ -142,6 +146,7 @@
 .navbar-wagon-dropdown-menu li > a:hover {
   background: transparent !important;
   color: black !important;
+  cursor:pointer !important;
 }
 .navbar-wagon-dropdown-menu:before {
   content: ' ';

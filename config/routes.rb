@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root to: 'pages#home'
   get '/search', to: 'pages#search'
   get '/users/:id/toys', to: 'users#toys', as: :user_toys
+  get '/transactions/:id/bagarre', to: 'transactions#bagarre', as: :transactions_bagarre
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :users, only: [:show, :edit, :update]
   resources :schools, only: [:show]

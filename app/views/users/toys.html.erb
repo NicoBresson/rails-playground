@@ -12,21 +12,34 @@
 <div class="container">
   <div class="row">
     <% @user_toys.each do |toy| %>
-      <div class="col-xs-12 col-sm-4">
-        <% if toy.photos.first.nil? %>
-          <% photo_path = ("e3b8igydl07dylxnuib9") %>
-        <% else %>
-          <% photo_path = toy.photos.first.path %>
-        <% end %>
-        <div class="card" style="background-image: linear-gradient(-225deg, rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('<%= cl_image_path photo_path %>');">
-          <div class="card-category"><%= @user.first_name %></div>
-          <div class="card-description">
-            <h2><%= toy.name %></h2>
-            <p><%= toy.description unless toy.description.nil? %></p>
+      <% if toy.photos.first.nil? %>
+        <% photo_path = ("e3b8igydl07dylxnuib9") %>
+      <% else %>
+        <% photo_path = toy.photos.first.path %>
+      <% end %>
+      <div class="col-xs-12 col-sm-6 col-md-4">
+        <!-- Thumbnail-->
+        <div class="card">
+          <div class="thumbnail">
+            <div>
+              <% avatar_url = toy.user.facebook_picture_url || cl_image_path('mtbg4ch4wojpwppzfhem') %>
+              <%= image_tag avatar_url, class: "card-user" %>
+            </div>
+            <%= cl_image_tag photo_path, class: "card-image" %>
           </div>
-          <% avatar_url = @user.facebook_picture_url || cl_image_path('mtbg4ch4wojpwppzfhem') %>
-          <%= image_tag avatar_url, class: "card-user avatar" %>
-          <%= link_to "", toy_path(toy.id), class: "card-link" %>
+          <!-- Post Content-->
+          <div class="card-content">
+            <div class="card-category"><%= toy.category %></div>
+            <h2 class="card-title"><%= toy.name %></h2>
+            <h3 class="card-sub_title"><%= toy.price %> candies</h3>
+            <div class="card-description" style="display: none; height: 100px; opacity: 1;">
+              <p><%= toy.description %></p>
+              <p><%= link_to "", toy_path(toy.id), class: "btn card-link" %></p>
+            </div>
+            <div class="post-meta">
+              <span class="timestamp"><i class="fa fa-clock-">o</i> 6 mins ago</span><span class="comments"><i class="fa fa-comments"></i><a rel="nofollow" rel="noreferrer"href="#"> 39 comments</a></span>
+            </div>
+          </div>
         </div>
       </div>
     <% end %>
