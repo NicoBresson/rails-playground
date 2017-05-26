@@ -3,7 +3,14 @@
 <div class="banner-thin" style="background-image: linear-gradient(-225deg, rgba(44, 62, 80, 0.6) 10%, rgba(76, 161, 175, 0.6) 50%), url('<%= cl_image_path("hrenp7omustctiz43hwb") %>');">
   <div class="banner-content">
     <h1><%= school.name %></h1>
-    <p>Choose a toy!!</p>
+    <% if current_user.school != school %>
+      <%= simple_form_for current_user do |form| %>
+      <%= form.association :school, collection: School.order('name ASC'), input_html: {value: :school}, as: :hidden %>
+      <%= form.submit 'Join this school', class: "btn btn-primary" %>
+      <% end %>
+    <% else %>
+      <p>Choose a toy!!</p>
+    <% end %>
   </div>
 </div>
 
