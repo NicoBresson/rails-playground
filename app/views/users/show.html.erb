@@ -10,141 +10,160 @@
         <div class="col-xs-12 col-sm-10 col-md-6">
           <div class="profile-portfolio">
             <div id="slideshow">
-               <% @user.toys.each do |toy| %>
-                 <div>
-                   <% if toy.photos.first.nil? %>
-                     <% photo_path = ("e3b8igydl07dylxnuib9") %>
-                   <% else %>
-                     <% photo_path = toy.photos.first.path %>
-                   <% end %>
-                   <div class="card">
-                     <div class="thumbnail">
-                       <%= cl_image_tag photo_path, class: "card-image" %>
-                     </div>
-                     <!-- Post Content-->
-                     <div class="card-content">
-                       <div class="card-category"><%= toy.category %></div>
-                       <h2 class="card-title"><%= toy.name %></h2>
-                       <h3 class="card-sub_title"><%= toy.price %> candies</h3>
-                       <div class="card-description" style="display: none; height: 100px; opacity: 1;">
-                         <p><%= toy.description %></p>
-                         <p><%= link_to "", toy_path(toy.id), class: "btn card-link" %></p>
-                       </div>
-                     </div>
+             <% @user.toys.each do |toy| %>
+             <div>
+               <% if toy.photos.first.nil? %>
+               <% photo_path = ("e3b8igydl07dylxnuib9") %>
+               <% else %>
+               <% photo_path = toy.photos.first.path %>
+               <% end %>
+               <div class="card">
+                 <div class="thumbnail">
+                   <%= cl_image_tag photo_path, class: "card-image" %>
+                 </div>
+                 <!-- Post Content-->
+                 <div class="card-content">
+                   <div class="card-category"><%= toy.category %></div>
+                   <h2 class="card-title"><%= toy.name %></h2>
+                   <h3 class="card-sub_title"><%= toy.price %> candies</h3>
+                   <div class="card-description" style="display: none; height: 100px; opacity: 1;">
+                     <p><%= toy.description %></p>
+                     <p><%= link_to "", toy_path(toy.id), class: "btn card-link" %></p>
                    </div>
                  </div>
-                <% end %>
-            </div>
-          </div>
-        </div>
-        <!-- profile information and editing -->
-        <div class="col-xs-12 col-sm-12 col-md-4">
-          <div class="profile-picture">
-            <% if current_user.photo.nil? %>
-              <% avatar_pict_path = cl_image_path('mtbg4ch4wojpwppzfhem') %>
-            <% else  %>
-              <% avatar_pict_path = current_user.photo.path %>
-            <% end %>
-            <% avatar_url = current_user.facebook_picture_url || avatar_pict_path %>
-            <% if avatar_url == current_user.facebook_picture_url %>
-              <%= image_tag avatar_url, class: "avatar-picture" %>
-            <% else %>
-              <%= cl_image_tag avatar_url, class: "avatar-picture" %>
-            <% end %>
-            <div class="profile-content">
-              <h3><%= @user.first_name %></h3>
-              <p>
-                <% if @user.school_id == nil%>
-                  <%= link_to "join a school!", edit_user_path(current_user) %>
-                <% else %>
-                  <% school= School.find(@user.school_id) %>
-                  <%= link_to school.name, school_path(school) %>
-                <% end %>
-              </p>
-              <i class="fa fa-pencil-square-o" aria-hidden="true"><%= link_to "Edit", edit_user_path(@user) %></i>
-            </div>
+               </div>
+             </div>
+             <% end %>
+           </div>
+         </div>
+       </div>
+       <!-- profile information and editing -->
+       <div class="col-xs-12 col-sm-12 col-md-4">
+        <div class="profile-picture">
+          <% if current_user.photo.nil? %>
+          <% avatar_pict_path = cl_image_path('mtbg4ch4wojpwppzfhem') %>
+          <% else  %>
+          <% avatar_pict_path = current_user.photo.path %>
+          <% end %>
+          <% avatar_url = current_user.facebook_picture_url || avatar_pict_path %>
+          <% if avatar_url == current_user.facebook_picture_url %>
+          <%= image_tag avatar_url, class: "avatar-picture" %>
+          <% else %>
+          <%= cl_image_tag avatar_url, class: "avatar-picture" %>
+          <% end %>
+          <div class="profile-content">
+            <h3><%= @user.first_name %></h3>
+            <p>
+              <% if @user.school_id == nil%>
+              <%= link_to "join a school!", edit_user_path(current_user) %>
+              <% else %>
+              <% school= School.find(@user.school_id) %>
+              <%= link_to school.name, school_path(school) %>
+              <% end %>
+            </p>
+            <i class="fa fa-pencil-square-o" aria-hidden="true"><%= link_to "Edit", edit_user_path(@user) %></i>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- section is used to have a nice demarcation. See css in _showuser.scss -->
-  <div class="spacer">
-    <div class="mask"></div>
-    <span class="spacer-logo"><%= cl_image_tag("q8they1jgywwis2ichxb", width: 40, height: 40,  crop: :fit) %></span>
-  </div>
-
-  <!-- Lets find out my sales and my purchas history -->
-  <% sales = [] %>
-  <% my_toys = Toy.where(user_id: @user.id) %>
-  <% my_toys.each do |toy| %>
-  <% sales << Transaction.where(toy_id: toy.id)[0] if !Transaction.where(toy_id: toy.id)[0].nil? %>
-  <% end %>
-
-  <% purchases = [] %>
-  <% @user.transactions.each do |transaction| %>
-  <% purchases << transaction %>
-  <% end %>
+</div>
 
 <!-- section is used to have a nice demarcation. See css in _showuser.scss -->
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12 col-sm-6">
-        <h2>My sales</h2>
-        <div class="transactions">
-          <% sales.each do |transaction| %>
-            <p> <strong>Toy: <%= Toy.find(transaction.toy_id).name %></strong></p>
-            <p> From: <%= transaction.start_time %> to <%= transaction.end_time %></p>
-            <%#= link_to "see transaction details..." transactions_bagarre_path(transaction)%>
-            <% if transaction.validated %>
-              <i class="fa fa-check green" aria-hidden="true"> Approved</i>
-            <% elsif transaction.validated.nil? %>
-            <ul class= "list-inline">
-              <li>
-                <%= simple_form_for transaction do |f| %>
-                  <%= f.input :validated, input_html: { value: true }, as: :hidden %>
-                  <%= f.submit "Accept request?", class: "btn btn-small btn-warning" %>
-              <% end %>
-              </li>
-              <li>
-                <%= simple_form_for transaction do |f| %>
-                  <%= f.input :validated, input_html: { value: false }, as: :hidden %>
-                  <%= f.submit "Deny request?", class: "btn btn-small btn-danger" %>
-                <% end %>
-              </li>
-            </ul>
-            <% else %>
-              <i class="fa fa-ban red" aria-hidden="true"> Rejected</i>
+<div class="spacer">
+  <div class="mask"></div>
+  <span class="spacer-logo"><%= cl_image_tag("q8they1jgywwis2ichxb", width: 40, height: 40,  crop: :fit) %></span>
+</div>
+
+<!-- Lets find out my sales and my purchas history -->
+<% sales = [] %>
+<% my_toys = Toy.where(user_id: @user.id) %>
+<% my_toys.each do |toy| %>
+<% sales << Transaction.where(toy_id: toy.id)[0] if !Transaction.where(toy_id: toy.id)[0].nil? %>
+<% end %>
+
+<% purchases = [] %>
+<% @user.transactions.each do |transaction| %>
+<% purchases << transaction %>
+<% end %>
+
+<!-- section is used to have a nice demarcation. See css in _showuser.scss -->
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <h2>My sales</h2>
+      <div class="transactions">
+        <% sales.each do |transaction| %>
+        <p> <strong>Toy: <%= Toy.find(transaction.toy_id).name %></strong></p>
+        <p> From: <%= transaction.start_time %> to <%= transaction.end_time %></p>
+        <%#= link_to "see transaction details..." transactions_bagarre_path(transaction)%>
+        <% if transaction.validated %>
+        <i class="fa fa-check green" aria-hidden="true"> Approved</i>
+        <% elsif transaction.validated.nil? %>
+        <ul class= "list-inline">
+          <li>
+            <%= simple_form_for transaction do |f| %>
+            <%= f.input :validated, input_html: { value: true }, as: :hidden %>
+            <%= f.submit "Accept request?", class: "btn btn-small btn-warning" %>
             <% end %>
-            <hr>
-          <% end %>
-        </div>
+          </li>
+          <li>
+            <%= simple_form_for transaction do |f| %>
+            <%= f.input :validated, input_html: { value: false }, as: :hidden %>
+            <%= f.submit "Deny request?", class: "btn btn-small btn-danger" %>
+            <% end %>
+          </li>
+        </ul>
+        <% else %>
+        <i class="fa fa-ban red" aria-hidden="true"> Rejected</i>
+        <% end %>
+        <hr>
+        <% end %>
       </div>
-      <div class="col-xs-12  col-sm-6">
-        <h2>My purchases</h2>
-        <div class="transactions">
-          <% purchases.each do |transaction| %>
-            <p><strong> Toy: <%= Toy.find(transaction.toy_id).name %></strong></p>
-            <p> From: <%= transaction.start_time %> to <%= transaction.end_time %></p>
-              <%#= link_to "see transaction details..." transactions_bagarre_path(transaction)%>
-            <% if transaction.validated %>
-              <i class="fa fa-check green" aria-hidden="true"> Approved</i>
-            <% else %>
-              <i class="fa fa-hourglass-half orange" aria-hidden="true">Waiting for approval...</i>
-            <% end %>
-            <hr>
+    </div>
+    <div class="col-xs-12  col-sm-6">
+      <h2>My purchases</h2>
+      <div class="transactions">
+        <% purchases.each do |transaction| %>
+        <p><strong> Toy: <%= Toy.find(transaction.toy_id).name %></strong></p>
+        <p> From: <%= transaction.start_time %> to <%= transaction.end_time %></p>
+        <%#= link_to "see transaction details..." transactions_bagarre_path(transaction)%>
+        <% if transaction.validated %>
+        <i class="fa fa-check green" aria-hidden="true"> Approved</i>
+
+        <!-- rating system -->
+        <div style="display: flex; align-items:center">
+          <% new_rating = transaction.rating == 5 ? 0 : transaction.rating + 1 %>
+          <% 1..transaction.rating.times do %>
+          <%= simple_form_for transaction do |f| %>
+          <% new_rating = transaction.rating == 5 ? 0 : transaction.rating + 1 %>
+          <%= f.input :rating, input_html: { value: new_rating }, as: :hidden %>
+          <%= f.input :validated, input_html: { value: true }, as: :hidden %>
+          <%= button_tag(type: 'submit', style:"border:none; background-color:transparent") do %>
+          <i class="fa fa-star"></i>
+          <% end %>
+          <% end %>
+          <% end %>
+          <% 1..(5-transaction.rating).times do %>
+          <%= simple_form_for transaction do |f| %>
+          <% new_rating = transaction.rating == 5 ? 0 : transaction.rating + 1 %>
+          <%= f.input :rating, input_html: { value: new_rating }, as: :hidden %>
+          <%= f.input :validated, input_html: { value: true }, as: :hidden %>
+          <%= button_tag(type: 'submit', style:"border:none; background-color:transparent") do %>
+          <i class="fa fa-star-o"></i>
+          <% end %>
+          <% end %>
           <% end %>
         </div>
+        <!-- rating system -->
+
+        <% else %>
+        <i class="fa fa-hourglass-half orange" aria-hidden="true">Waiting for approval...</i>
+        <% end %>
+        <hr>
+        <% end %>
       </div>
     </div>
   </div>
-
-  <div>
-    <% @user.transactions.each do |transaction| %>
-      <ul>
-        <li><%= transaction.id %> | <%= transaction.validated %> | <%= "*" *transaction.rating %></li>
-      </ul>
-    <% end %>
-  </div>
+</div>
 </div>
