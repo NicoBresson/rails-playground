@@ -86,7 +86,7 @@ puts 'Starting deals'
   transaction = Transaction.new({
     start_time: Date.today,
     end_time: (Date.today + (1..6).to_a.sample),
-    rating: (0..5).to_a.sample
+    rating: (0..5).to_a.sample,
     })
   transaction.toy = Toy.all.sample
   transaction.user = User.all.sample
