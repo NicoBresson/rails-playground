@@ -110,33 +110,50 @@
     <div class="row">
       <div class="col-xs-12 col-sm-6">
         <h2>My sales</h2>
-        <% sales.each do |transaction| %>
-          <p> Toy: <%= Toy.find(transaction.toy_id).name %></p>
-          <p> Who wants it: <%= transaction.user.first_name %></p>
-          <p> From: <%= transaction.start_time %> to <%= transaction.end_time %></p>
-          <% if transaction.validated %>
-            <div class="btn btn-success">Approved</div>
-          <% else %>
-            <%= simple_form_for transaction do |f| %>
-              <%= f.input :validated, input_html: { value: true }, as: :hidden %>
-              <%= f.submit "Pending request: Accept?", class: "btn btn-warning" %>
+        <div class="transactions">
+          <% sales.each do |transaction| %>
+            <p> <strong>Toy: <%= Toy.find(transaction.toy_id).name %></strong></p>
+            <p> From: <%= transaction.start_time %> to <%= transaction.end_time %></p>
+            <%#= link_to "see transaction details..." transactions_bagarre_path(transaction)%>
+            <% if transaction.validated %>
+              <i class="fa fa-check green" aria-hidden="true"> Approved</i>
+            <% elsif transaction.validated.nil? %>
+            <ul class= "list-inline">
+              <li>
+                <%= simple_form_for transaction do |f| %>
+                  <%= f.input :validated, input_html: { value: true }, as: :hidden %>
+                  <%= f.submit "Accept request?", class: "btn btn-small btn-warning" %>
+              <% end %>
+              </li>
+              <li>
+                <%= simple_form_for transaction do |f| %>
+                  <%= f.input :validated, input_html: { value: false }, as: :hidden %>
+                  <%= f.submit "Deny request?", class: "btn btn-small btn-danger" %>
+                <% end %>
+              </li>
+            </ul>
+            <% else %>
+              <i class="fa fa-ban red" aria-hidden="true"> Rejected</i>
             <% end %>
+            <hr>
           <% end %>
-          <hr>
-        <% end %>
+        </div>
       </div>
       <div class="col-xs-12  col-sm-6">
         <h2>My purchases</h2>
-        <% purchases.each do |transaction| %>
-          <p> Toy: <%= Toy.find(transaction.toy_id).name %></p>
-          <p> From: <%= transaction.start_time %> to <%= transaction.end_time %></p>
-          <% if transaction.validated %>
-          <div class="btn btn-success">Approved</div>
-          <% else %>
-          <div class="btn btn-warning">Pending...</div>
+        <div class="transactions">
+          <% purchases.each do |transaction| %>
+            <p><strong> Toy: <%= Toy.find(transaction.toy_id).name %></strong></p>
+            <p> From: <%= transaction.start_time %> to <%= transaction.end_time %></p>
+              <%#= link_to "see transaction details..." transactions_bagarre_path(transaction)%>
+            <% if transaction.validated %>
+              <i class="fa fa-check green" aria-hidden="true"> Approved</i>
+            <% else %>
+              <i class="fa fa-hourglass-half orange" aria-hidden="true">Waiting for approval...</i>
+            <% end %>
+            <hr>
           <% end %>
-          <hr>
-        <% end %>
+        </div>
       </div>
     </div>
   </div>
