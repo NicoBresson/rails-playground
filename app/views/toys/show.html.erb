@@ -72,7 +72,7 @@
 <% dates=[] %>
 <% @toy.transactions.each do |transaction| %>
 <% (transaction.start_time..transaction.end_time).to_a.each do |date| %>
-<% dates << date.strftime("%m/%d/%Y") %>
+<% dates << date.strftime("%d/%m/%Y") %>
 <% end %>
 <% end %>
 
@@ -81,6 +81,7 @@
   $(document).ready(function(){
     $('.datepicker').datepicker({
       weekStart: 1,
+      format: "dd/mm/yyyy",
       todayBtn: true,
       clearBtn: true,
       startDate: "today",
@@ -90,9 +91,10 @@
     });
     $(document).click(function(){
       var parts = $('#transaction_start_time')[0].value.split('/');
-      var beg = new Date (parts[2], parts[0]-1,parts[1]);
+      console.log(parts);
+      var beg = new Date (parts[2], parts[1], parts[0]-1);
       var parts = $('#transaction_end_time')[0].value.split('/');
-      var end = new Date (parts[2],parts[0]-1,parts[1]);
+      var end = new Date (parts[2], parts[1], parts[0]-1);
       var days = (end - beg) / (1000*60*60*24);
       var price = <%= raw @toy.price %>;
       if (Number.isInteger(Math.abs((Math.round(days) + 1) * price))) {
