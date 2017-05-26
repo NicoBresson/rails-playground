@@ -23,7 +23,10 @@ class TransactionsController < ApplicationController
     @transaction.validated = params[:transaction][:validated]
     @transaction.rating = params[:transaction][:rating]
     @transaction.save
-    redirect_to user_path(current_user)
+    respond_to do |format|
+        format.html { redirect_to user_path(current_user) }
+        format.js  # <-- will render `app/views/transaction/update.js.erb`
+      end
   end
 
   def bagarre
