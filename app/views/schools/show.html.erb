@@ -14,6 +14,9 @@
 <div class="container">
   <div class="row">
     <% @toys.each do |toy| %>
+      <!-- hide if current-user have the card -->
+      <% if current_user == toy.user%>
+      <% else %>
       <!-- determination of the toy photo -->
       <% if toy.photos.first.nil? %>
         <% photo_path = ("e3b8igydl07dylxnuib9") %>
@@ -22,7 +25,7 @@
       <% end %>
       <!-- new -->
         <div class="col-xs-12 col-sm-6 col-md-4">
-      <!-- Thumbnail-->
+          <!-- Thumbnail-->
           <div class="card">
             <div class="thumbnail">
               <div>
@@ -35,7 +38,7 @@
             <div class="card-content">
               <div class="card-category"><%= toy.category %></div>
               <h2 class="card-title"><%= toy.name %></h2>
-              <h3 class="card-sub_title"><%= toy.price %></h3>
+              <h3 class="card-sub_title"><%= toy.price %> candies</h3>
               <div class="card-description" style="display: none; height: 100px; opacity: 1;">
                 <p><%= toy.description %></p>
                 <p><%= link_to "", toy_path(toy.id), class: "btn card-link" %></p>
@@ -46,6 +49,7 @@
             </div>
           </div>
         </div>
+      <% end %>
     <% end %>
     <!-- Post-->
   </div>
