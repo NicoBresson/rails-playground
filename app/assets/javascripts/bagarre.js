@@ -54,12 +54,6 @@ $(document).ready(function(){
 
   })();
 
-
-    var eat = ['yum!', 'gulp', 'burp!', 'nom'];
-    var yum = document.createElement('p');
-    var msie = /*@cc_on!@*/0;
-    yum.style.opacity = 1;
-
     var links = document.querySelectorAll('li > a'), el = null;
     for (var i = 0; i < links.length; i++) {
       el = links[i];

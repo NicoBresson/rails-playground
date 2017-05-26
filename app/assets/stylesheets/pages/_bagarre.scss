@@ -1,6 +1,6 @@
 .holder{
   width: 600px;
-  margin: 0px auto;
+  margin: 30px auto;
   display: flex;
   justify-content: space-around;
 }
@@ -22,11 +22,11 @@
   cursor: move;
 }
 
-ul li:first-child a{ background: #34495e }
-ul li:nth-child(2) a{ background: #3498db }
-ul li:nth-child(3) a{ background: #f39c12 }
-ul li:nth-child(4) a{ background: #27ae60 }
-ul li:last-child a{ background: #9b59b6 }
+.holder ul li:first-child a{ background: #34495e }
+.holder ul li:nth-child(2) a{ background: #3498db }
+.holder ul li:nth-child(3) a{ background: #f39c12 }
+.holder ul li:nth-child(4) a{ background: #27ae60 }
+.holder ul li:last-child a{ background: #9b59b6 }
 
 *[draggable=true] {
   -moz-user-select:none;
@@ -38,16 +38,21 @@ ul li:last-child a{ background: #9b59b6 }
   background-color: rgba(238,238,238, 0.5);
 }
 
-li a:hover:after {
-  content: ' (drag me)';
+.text-center h1 {
+  padding: 15px;
+  margin: 0px;
 }
 
-ul {
+.holder ul {
   margin-left: 200px;
   min-height: 300px;
 }
 
-li.over {
+.dragndrop {
+  margin-left: 250px;
+}
+
+.holder li.over {
   border-color: #333;
   background: #ccc;
   border-radius: 5px;

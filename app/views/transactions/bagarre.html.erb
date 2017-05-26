@@ -1,6 +1,8 @@
-<h1>All my late transactions</h1>
+<div class="text-center">
+  <h1>All my late transactions</h1>
 
-<p><%= Transaction.all.first.user.first_name %> has not given you back <%= Transaction.all.first.toy.name %></p>
+  <p><%= Transaction.all.first.user.first_name %> has not given you back <%= Transaction.all.first.toy.name %></p>
+</div>
 
 <div class="holder">
   <div id="bin">
@@ -28,15 +30,18 @@
   </div>
 
   <!-- find other school students to join the fight -->
-  <% school = @user.school %>
-  <% users = school.users[0..4] %>
-  <% if users.empty? %>
-     <p>Friend</p>
-  <% else %>
-    <ul>
-      <% users.each_with_index do |user, index| %>
-      <li><a draggable="true" href="" id=<%= "#{index+1}" %>><%= user.first_name %></a></li>
-      <% end %>
-    </ul>
-  <% end %>
+  <div id="drag-n-drop">
+    <p class="text-center">Drag and Drop your classmates!</p>
+    <% school = @user.school %>
+    <% users = school.users[0..4] %>
+    <% if users.empty? %>
+       <p>Friend</p>
+    <% else %>
+      <ul>
+        <% users.each_with_index do |user, index| %>
+        <li><a draggable="true" href="" id=<%= "#{index+1}" %>><%= user.first_name %></a></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
 </div>
