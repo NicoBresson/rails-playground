@@ -20,9 +20,12 @@ class TransactionsController < ApplicationController
 
   def update
     @transaction = Transaction.find(params[:id])
-    @transaction.validated = params[:transaction][:validated]
+    @transaction.validated = params[:transaction][:validated] # TODO: why does it work even if it has not been permitted?
     @transaction.save
-    redirect_to user_path(current_user)
+    respond_to do |format|
+        format.html { redirect_to user_path(current_user) }
+        format.js  # <-- will render `app/views/transaction/update.js.erb`
+      end
   end
 
   def bagarre
