@@ -35,117 +35,137 @@
           <div class="profile-portfolio">
             <h2><%= link_to 'My Portfolio', user_toys_path(current_user) %></h2>
             <div id="slideshow">
-               <% @user.toys.each do |toy| %>
-                 <div>
-                   <% if toy.photos.first.nil? %>
-                     <% photo_path = ("e3b8igydl07dylxnuib9") %>
-                   <% else %>
-                     <% photo_path = toy.photos.first.path %>
-                   <% end %>
-                   <div class="card" style="background-image: linear-gradient(-225deg, rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('<%= cl_image_path photo_path %>');">
-                     <div class="card-category"><%= @user.first_name %></div>
-                     <div class="card-description">
-                       <h2><%= toy.name %></h2>
-                       <p><%= toy.description unless toy.description.nil? %></p>
-                     </div>
-                     <%= link_to "", toy_path(toy.id), class: "card-link" %>
-                   </div>
+             <% @user.toys.each do |toy| %>
+             <div>
+               <% if toy.photos.first.nil? %>
+               <% photo_path = ("e3b8igydl07dylxnuib9") %>
+               <% else %>
+               <% photo_path = toy.photos.first.path %>
+               <% end %>
+               <div class="card" style="background-image: linear-gradient(-225deg, rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('<%= cl_image_path photo_path %>');">
+                 <div class="card-category"><%= @user.first_name %></div>
+                 <div class="card-description">
+                   <h2><%= toy.name %></h2>
+                   <p><%= toy.description unless toy.description.nil? %></p>
                  </div>
-                <% end %>
-            </div>
-          </div>
-        </div>
-        <!-- profile information and editing -->
-        <div class="col-xs-12 col-md-4">
-          <div class="profile-picture">
-            <% if current_user.photo.nil? %>
-              <% avatar_pict_path = cl_image_path('mtbg4ch4wojpwppzfhem') %>
-            <% else  %>
-              <% avatar_pict_path = current_user.photo.path %>
-            <% end %>
-            <% avatar_url = current_user.facebook_picture_url || avatar_pict_path %>
-            <% if avatar_url == current_user.facebook_picture_url %>
-              <%= image_tag avatar_url, class: "avatar-picture" %>
-            <% else %>
-              <%= cl_image_tag avatar_url, class: "avatar-picture" %>
-            <% end %>
-            <div class="profile-content">
-              <h3><%= @user.first_name %></h3>
-              <p>
-                <% if @user.school_id == nil%>
-                  <%= link_to "join a school!", edit_user_path(current_user) %>
-                <% else %>
-                  <% school= School.find(@user.school_id) %>
-                  <%= link_to school.name, school_path(school) %>
-                <% end %>
-              </p>
-              <i class="fa fa-pencil-square-o" aria-hidden="true"><%= link_to "Edit", edit_user_path(@user) %></i>
-            </div>
+                 <%= link_to "", toy_path(toy.id), class: "card-link" %>
+               </div>
+             </div>
+             <% end %>
+           </div>
+         </div>
+       </div>
+       <!-- profile information and editing -->
+       <div class="col-xs-12 col-md-4">
+        <div class="profile-picture">
+          <% if current_user.photo.nil? %>
+          <% avatar_pict_path = cl_image_path('mtbg4ch4wojpwppzfhem') %>
+          <% else  %>
+          <% avatar_pict_path = current_user.photo.path %>
+          <% end %>
+          <% avatar_url = current_user.facebook_picture_url || avatar_pict_path %>
+          <% if avatar_url == current_user.facebook_picture_url %>
+          <%= image_tag avatar_url, class: "avatar-picture" %>
+          <% else %>
+          <%= cl_image_tag avatar_url, class: "avatar-picture" %>
+          <% end %>
+          <div class="profile-content">
+            <h3><%= @user.first_name %></h3>
+            <p>
+              <% if @user.school_id == nil%>
+              <%= link_to "join a school!", edit_user_path(current_user) %>
+              <% else %>
+              <% school= School.find(@user.school_id) %>
+              <%= link_to school.name, school_path(school) %>
+              <% end %>
+            </p>
+            <i class="fa fa-pencil-square-o" aria-hidden="true"><%= link_to "Edit", edit_user_path(@user) %></i>
           </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <!-- section is used to have a nice demarcation. See css in _showuser.scss -->
-  <div class="spacer">
-    <div class="mask"></div>
-    <span class="spacer-logo"><%= cl_image_tag("q8they1jgywwis2ichxb", width: 40, height: 40,  crop: :fit) %></span>
-  </div>
-
-  <!-- Lets find out my sales and my purchas history -->
-  <% sales = [] %>
-  <% my_toys = Toy.where(user_id: @user.id) %>
-  <% my_toys.each do |toy| %>
-  <% sales << Transaction.where(toy_id: toy.id)[0] if !Transaction.where(toy_id: toy.id)[0].nil? %>
-  <% end %>
-
-  <% purchases = [] %>
-  <% @user.transactions.each do |transaction| %>
-  <% purchases << transaction %>
-  <% end %>
-
-<!-- section is used to have a nice demarcation. See css in _showuser.scss -->
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12 col-sm-6">
-        <h2>My sales</h2>
-        <% sales.each do |transaction| %>
-          <p> Toy: <%= Toy.find(transaction.toy_id).name %></p>
-          <p> Who wants it: <%= transaction.user.first_name %></p>
-          <p> From: <%= transaction.start_time %> to <%= transaction.end_time %></p>
-          <% if transaction.validated %>
-            <div class="btn btn-success">Approved</div>
-          <% else %>
-            <%= simple_form_for transaction do |f| %>
-              <%= f.input :validated, input_html: { value: true }, as: :hidden %>
-              <%= f.submit "Pending request: Accept?", class: "btn btn-warning" %>
-            <% end %>
-          <% end %>
-          <hr>
-        <% end %>
-      </div>
-      <div class="col-xs-12  col-sm-6">
-        <h2>My purchases</h2>
-        <% purchases.each do |transaction| %>
-          <p> Toy: <%= Toy.find(transaction.toy_id).name %></p>
-          <p> From: <%= transaction.start_time %> to <%= transaction.end_time %></p>
-          <% if transaction.validated %>
-          <div class="btn btn-success">Approved</div>
-          <% else %>
-          <div class="btn btn-warning">Pending...</div>
-          <% end %>
-          <hr>
-        <% end %>
-      </div>
-    </div>
-  </div>
-
-  <div>
-    <% @user.transactions.each do |transaction| %>
-      <ul>
-        <li><%= transaction.id %> | <%= transaction.validated %> | <%= "*" *transaction.rating %></li>
-      </ul>
-    <% end %>
   </div>
 </div>
+
+<!-- section is used to have a nice demarcation. See css in _showuser.scss -->
+<div class="spacer">
+  <div class="mask"></div>
+  <span class="spacer-logo"><%= cl_image_tag("q8they1jgywwis2ichxb", width: 40, height: 40,  crop: :fit) %></span>
+</div>
+
+<!-- Lets find out my sales and my purchas history -->
+<% sales = [] %>
+<% my_toys = Toy.where(user_id: @user.id) %>
+<% my_toys.each do |toy| %>
+<% sales << Transaction.where(toy_id: toy.id)[0] if !Transaction.where(toy_id: toy.id)[0].nil? %>
+<% end %>
+
+<% purchases = [] %>
+<% @user.transactions.each do |transaction| %>
+<% purchases << transaction %>
+<% end %>
+
+<!-- section is used to have a nice demarcation. See css in _showuser.scss -->
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <h2>My sales</h2>
+      <% sales.each do |transaction| %>
+      <p> Toy: <%= Toy.find(transaction.toy_id).name %></p>
+      <p> Who wants it: <%= transaction.user.first_name %></p>
+      <p> From: <%= transaction.start_time %> to <%= transaction.end_time %></p>
+      <% if transaction.validated %>
+      <div class="btn btn-success">Approved</div>
+      <% else %>
+      <%= simple_form_for transaction do |f| %>
+      <%= f.input :validated, input_html: { value: true }, as: :hidden %>
+      <%= f.submit "Pending request: Accept?", class: "btn btn-warning" %>
+      <% end %>
+      <% end %>
+      <hr>
+      <% end %>
+    </div>
+    <div class="col-xs-12  col-sm-6">
+      <h2>My purchases</h2>
+      <% purchases.each do |transaction| %>
+      <p> Toy: <%= Toy.find(transaction.toy_id).name %></p>
+      <p> From: <%= transaction.start_time %> to <%= transaction.end_time %></p>
+      <% if transaction.validated %>
+      <div class="btn btn-success">Approved</div>
+
+      <!-- rating system -->
+      <div style="display: flex; align-items:center">
+        <% new_rating = transaction.rating == 5 ? 0 : transaction.rating + 1 %>
+        <% 1..transaction.rating.times do %>
+        <%= simple_form_for transaction do |f| %>
+        <% new_rating = transaction.rating == 5 ? 0 : transaction.rating + 1 %>
+        <%= f.input :rating, input_html: { value: new_rating }, as: :hidden %>
+        <%= f.input :validated, input_html: { value: true }, as: :hidden %>
+        <%= button_tag(type: 'submit', style:"border:none; background-color:transparent") do %>
+        <i class="fa fa-star"></i>
+        <% end %>
+        <% end %>
+        <% end %>
+        <% 1..(5-transaction.rating).times do %>
+        <%= simple_form_for transaction do |f| %>
+        <% new_rating = transaction.rating == 5 ? 0 : transaction.rating + 1 %>
+        <%= f.input :rating, input_html: { value: new_rating }, as: :hidden %>
+        <%= f.input :validated, input_html: { value: true }, as: :hidden %>
+        <%= button_tag(type: 'submit', style:"border:none; background-color:transparent") do %>
+        <i class="fa fa-star-o"></i>
+        <% end %>
+        <% end %>
+        <% end %>
+      </div>
+
+      <% else %>
+      <div class="btn btn-warning">Pending...</div>
+      <% end %>
+      <hr>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+</div>
+
